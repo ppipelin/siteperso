@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en"  style="background: #fafdfe">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91929483-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-91929483-3');
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script> 
+		$(function(){
+			$("#header").load("header.html"); 
+			$("#footer").load("footer.html"); 
+		});
+	</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Paul-Elie Pipelin">
+	<meta name="description" content="Works on image synthesis (raytracing, pathtracing, sampling...). Personal site of Paul-Elie Pipelin, engineer in digital imaging.">
+	<meta name="keywords" content="Tracing, Ray, Path, Synthesis, Rendering, Engineer, Paul-Elie, Pipelin, Digital, Imaging, Computer, Graphics">
+	<meta name="theme-color" content="#36a1b0">
+
+	<title>Paul-Élie Pipelin - Raytracing</title>
+	<base href="/">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:200,300|Quicksand:300,400|Roboto">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="gallery/styles.css">
+	<link rel="stylesheet" href="gallery/raytracing/styles.css">
+	<link rel="icon" type="image/x-icon" href="assets/Torch.png">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/blazy/1.8.2/blazy.min.js"></script>
+	<script>
+		var blazy = new Blazy({
+		container: '#container' // Default is window
+		});
+	</script>
+</head>
+<body>
+	<a class="finger hella bae-rock +" href="en/gallery/raytracing">
+		english
+	</a>
+	<a class="finger hella bae-rock +" href="fr/gallery/raytracing">
+		français
+	</a>
+
+	<div id="header">
+		<h1 class="forehead undertow charming hella ++++">
+			Paul-Élie Pipelin
+		</h1>
+	</div>
+
+	<!------------------------------------------------>
+
+	<nav class="tight stormsurge +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella" href="en/">home</a>
+		<a class="finger bae-rock hella" href="en/gallery">gallery</a>
+	</nav>
+
+	<!------------------------------------------------>
+	<em style="color:red; font-weight: bold;">
+		NEW! WEBGL Path tracer available <a class="finger bae-rock inline" href="experiments/webgltracer">here</a>
+	</em>
+	<h1>Ray Tracing and Path Tracing</h1>
+	During the second year at ESIR, I made a ray tracing rendering engine with a <a href="https://glennkerbiriou.yj.fr" target="_blank">co-worker</a>. We developed it incrementally, starting from a simple ray tracing engine with Phong diffuse and specular colors to a path tracing engine with BRDF and real-time support. We developed it in C++.
+	<br>
+	During the third and last year at ESIR, I participated in an <a class="finger bae-rock inline" href="en/gallery/raytracing/#industrial">industrial project</a> about image synthesis as well.
+
+	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella">Ray tracing - Phong</a>
+	</nav>
+
+	Here is three images of the same scene. One only by colors, the second with Phong shader and the last just adds a tweaky hack named soft shadow which is basically ambient.
+
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/raytracing/CornelEmpty.png" title="Ray tracing rendered image of Cornel Box" alt="Ray Tracing Cornel Box">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/raytracing/CornelPhong.png" title="Ray tracing rendered image of Cornel Box, Phong shader" alt="Ray Tracing Cornel Box Phong Shader">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/raytracing/CornelSoftShadow.png" title="Ray tracing rendered image of Cornel Box, Phong shader with soft shadow" alt="Ray Tracing Cornel Box Phong Shader Soft Shadow">
+		</div>
+	</div>
+
+	A more complicated scene with emissive lightning, specular surfaces and textures. Naturally, we added acceleration structures to speed up the rendering, a 
+	<span class="tooltipcustom">BVH
+		<span class="tooltiptext">Bounding Volume Hierarchy</span>
+	</span> coupled with an
+	<span class="tooltipcustom">SAH
+		<span class="tooltiptext">Surface-Area Heuristic</span>
+	</span> which we can see below, first without SAH, last with. Note how the bounding boxes better correlate with the scene geometry.
+
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/Tibet.png" title="Ray tracing rendered image of Tibet House with emissive lightning" alt="Ray Tracing Tibet House">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/TibetHeat.png" title="Ray tracing rendered image of Tibet House's BVH" alt="Ray Tracing Tibet House BVH">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/TibetHeatSAH.png" title="Ray tracing rendered image of Tibet House's BVH with SAH" alt="Ray Tracing Tibet House BVH SAH">
+		</div>
+	</div>
+
+	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella">Path Tracing</a>
+	</nav>
+
+	We then added indirect lightning, light surface, stratification of lights and pixels (to  reduce variance between samples) and refraction. We also defined few more primitives such as spheres, annulus and cylinders to get perfect shapes. This engine embed a real-time visualizer thanks to upscaling, providing a more fluid camera. Hence, many features are toggled by keyboard.
+
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/Demo_2000x2000_1154pass_20361s_1strat.jpg" title="Path tracing rendered image of Cornel Box with various primitives"alt="Path Tracing Cornel Box Primitives">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/Corridor_500x500_3953pass_1184s_1strat.jpg" title="Path tracing rendered image of Corridor" alt="Path Tracing Corridor">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/Transparent_1000x1000_2988pass_15457s_1shadowrays_stratification-enabled.jpg" title="Path tracing rendered image of a transparent crocodile" alt="Path Tracing Crocodile Transparent">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/Bathroom_500x500_6117pass_13388s_1strat.bmp" title="Path tracing rendered image of a bathroom" alt="Path Tracing Bathroom">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/RenderedRayTracing.gif" title="Video of path traced rendered animation" alt="Path Tracing Gif Video Render Bubble Transparent Refraction">
+		</div>
+	</div>
+
+	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella">Real Time</a>
+	</nav>
+
+	We added realtime support in our application, which permitted us to debug and place components easily. It also helped to choose precisely rendering options. This real time feature achieve to have good performances thanks to an automatic decrease of the number of sent rays when moving the camera. The image will auto scale back to normal on stop, allowing an infinite number of passes and antialiasing.
+	<!-- Montrer mp4 de mouvement avec antialiasing bili et NN, direct + indirect-->
+	<!-- Montrer toggle des heatmap + normales -->
+
+	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella" name="industrial">Industrial Project</a>
+	</nav>
+
+	Last year at ESIR embedded an industrial project proposed by an enterprise. The latter where I participated was proposed by Chaos Czech which develop the <a href="https://corona-renderer.com/">Corona Renderer</a>. This project driven by four persons consists in implementing Optimal Multiple Importance Sampling in a bidirectional path tracer. It is also totally necessary to be unbiased. Here are presented the steps of the project, beginning with a small skill upgrading embedding Multiple Importance Sampling, Light Tracing and Bidirectional Path Tracing.  
+
+	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella" href="http://sites.fas.harvard.edu/~cs278/papers/veach.pdf" target="_blank">Multiple Importance Sampling</a>
+	</nav>
+
+	The MIS which was implemented using two sampling methods, the one of the BSDFs and the one of the lights that we can observe with 64 passes below respectively. The scene below is similar to the one proposed by Veach and Guibas, four spheres of color, four surfaces with more and more mate BSDFs. The last image corresponds to the weights determined by the <i>balance heuristic</i>.
+
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/64/64BS.png" title="Path tracing rendered image of Veach scene with BSDF sampling" alt="Path Tracing Veach BSDF Sampling">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/64/64LS.png" title="Path tracing rendered image of Veach scene with light sampling" alt="Path Tracing Veach Light Sampling">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/512weight.png" title="Path tracing image of the balance heuristic weights" alt="Path Tracing Veach Balance Heuristic Weight Multiple Importance Sampling MIS">
+		</div>
+	</div>
+
+	Here are the renders of the same scene with a classic path tracer and the one with MIS. The last image is the subtraction of the two others to verify that there is no bias.
+
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/64/64ref.png" title="Path tracing rendered image of Veach scene" alt="Path Tracing Veach">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/64/64power.png" title="Path tracing rendered image of Veach scene with Multiple Importance Sampling" alt="Path Tracing Veach Multiple Importance Sampling MIS">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/64/64difference.png" title="Substraction between reference and MIS path traced image to verify that it is unbiased" alt="Path Tracing Veach Multiple Importance Sampling MIS Unbiased">
+		</div>
+	</div>
+
+	Here are the effects of the weights of each sampling method and the final result with 2048 passes (500s).
+	
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/2048/2048BSW.png" title="Path tracing rendered image of Veach scene with weights on BSDF sampling" alt="Path Tracing Multiple Importance Sampling MIS BSDF">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/2048/2048LSW.png" title="Path tracing rendered image of Veach scene with weights on light sampling" alt="Path Tracing Multiple Importance Sampling MIS Light">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/2048/2048power.png" title="Path tracing rendered image of Veach scene with MIS using the balance heuristic" alt="Path Tracing Multiple Importance Sampling MIS Balance Heuristic High Quality">
+		</div>
+	</div>
+
+	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella">Bidirectional Path Tracing</a>
+	</nav>
+
+	The BDPT is implemented with the <i>balance heuristic</i>. It allows complex paths like caustics to be traced which is necessary in some scenes. Here are successively Naive Path Tracing, Light Tracing and Bidirectional Path Tracing rendered with a high number of passes : 1024. The BDPT is the fusion of PT an LT in a sense that it computes all the possibilities of sampling a single path with these two techniques.
+	A path of 7 vertices can be sampled using 7 combinations, starting from [<i>s=0;t=7</i>] to [<i>s=6;t=1</i>] where <i>s</i> is the number of light vertices and <i>t</i> is the number of camera vertices (<i>radiance and importance</i>). The pdf of the current path with the current sampling is computed by studying all the other ways to sample this path by using forward and reverse pdf.
+	
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/NaivePathTracing1024.png" title="Naive Path tracing rendered image of Cornel box with a caustic" alt="Naive Path Tracing Caustic">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/LightTracing1024.png" title="Light tracing rendered image of Cornel box with a caustic" alt="Light Tracing Caustic">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/BidirectionalPathTracing1024.png" title="Bidirectional Path tracing rendered image of Cornel box with a caustic" alt="Bidirectional Path Tracing Multiple Importance Sampling">
+		</div>
+	</div>
+
+	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella">OptiMIS</a>
+	</nav>
+
+	The complete minimization of Monte Carlo estimator variance with the releasing of the weighting constraint between 0 and 1 proposed by <a href="https://www.researchgate.net/profile/Pascal_Grittmann/publication/334433762_Optimal_multiple_importance_sampling/links/5d2c695da6fdcc2462e12f96/Optimal-multiple-importance-sampling.pdf" target="_blank">Kondapaneni et. al.</a> led once again to a better variance minimization of rendered images. This method is based on the estimation of a linear system with de number of passes which permits to calculate the optimal weights to apply.
+
+	<div class="row forehead undertow">
+		<div class="col-sm-auto midly">
+			<i>Two different sampling</i>
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/optimis/technique1.jpg" title="Rendered path traced image of sampling technique A" alt="Path Tracing Technique Sampling">
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/optimis/technique2.jpg" title="Rendered path traced image of sampling technique B" alt="Path Tracing Technique Sampling">
+		</div>
+		<div class="col-sm-auto midly my-auto">
+			<i>Balance heuristic</i>
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/optimis/balance.jpg" title="Balance Heuristic Multiple Importance Sampling" alt="Balance Heuristic Multiple Importance Sampling MIS">
+		</div>
+		<div class="col-sm-auto midly my-auto">
+			<i>Optimal weights</i>
+			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/optimis/optimal.jpg" title="Balance Heuristic Optimal Multiple Importance Sampling" alt="Balance Heuristic Optimal Multiple Importance Sampling OptiMIS MIS">
+		</div>
+	</div>
+
+	Our task was to implement this method in a BDPT.
+	<br>
+	To do this, the main contributions were :
+	<ul>
+		<li>The correction of some materials not computing the pdf in case of zero contribution</li>
+		<li>The correction of the microfacet's model that could generate negative pdf when computing the new normal</li>
+		<li>Taking into account <i>Light Tracing</i> paths</li>
+		<li>Taking into account zero contribution paths</li>
+	</ul>
+	This total integration gave very satisfying results in simple paths (direct lightning i.e. with an optimal sampling technique) but not with more complex path such as caustics.
+
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger full" src="assets/raytracing/optimis/glass_demo.jpg" title="Glass with caustic rendered in a Bidirectional Path Tracer" alt="Glass Caustic Rendered Bidirectional Path Tracer">
+		</div>
+	</div>
+
+	<div id="footer" class="forehead +++"></div>
+</body>
+</html>

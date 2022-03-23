@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en"  style="background: #fafdfe">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91929483-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-91929483-3');
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script> 
+		$(function(){
+			$("#header").load("header.html"); 
+			$("#footer").load("footer.html"); 
+		});
+	</script>	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Paul-Elie Pipelin">
+	<meta name="description" content="Research internship in indoor localization at Kyushu University, Fukuoka, Japan. Personal site of Paul-Elie Pipelin, engineer in digital imaging.">
+	<meta name="keywords" content="Kyushu, University, Research, IPIN, 2019, Engineer, Paul-Elie, Pipelin, Digital, Imaging, Computer, Gaphics">
+	<meta name="theme-color" content="#36a1b0">
+
+	<title>Paul-Élie Pipelin - Kyushu</title>
+	<base href="/">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:200,300|Quicksand:300,400|Roboto">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="gallery/styles.css">
+	<link rel="icon" type="image/x-icon" href="assets/Torch.png">
+</head>
+<body>
+	<a class="finger hella bae-rock +" href="en/works/kyushu">
+		english
+	</a>
+	<a class="finger hella bae-rock +" href="fr/works/kyushu">
+		français
+	</a>
+
+	<div id="header">
+		<h1 class="forehead undertow charming hella ++++">
+			Paul-Élie Pipelin
+		</h1>
+	</div>
+
+	<!------------------------------------------------>
+
+	<nav class="tight stormsurge +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella" href="en/">home</a>
+		<a class="finger bae-rock hella" href="en/resume/">résumé</a>
+
+	</nav>
+	
+	<!------------------------------------------------>
+
+	<nav class="tight stormsurge +++" aria-label="plunge" id="plunge">
+		<div class="text">
+			During the summer of 2019, I worked as an intern for 3 months in <a href="http://limu.ait.kyushu-u.ac.jp/" target="_blank">LIMU</a> research laboratory of Kyūshū University in Fukuoka, Japan. This internship was supervised by associate professor <a href="http://limu.ait.kyushu-u.ac.jp/~uchiyama/me/index_e.html" target="_blank">Hideaki Uchiyama</a>. I mostly worked in the building of a framework for indoor localization.
+		</div>
+		<nav class="tight undertow forehead" aria-label="plunge" id="plunge">
+			<a class="finger bae-rock hella">Competition</a>
+		</nav>
+		<div class="text"> 
+			The main goal of this internship was to participate to one of the tracks of the <a href="http://ipin-conference.org/2019/cfc.html" target="_blank">competition</a> organized by IPIN 2019. Hence, every work, such as documentation, research or implementation, lead to a framework solving the problem raised by this competition. This competition is divided into five tracks focusing on different indoor localization problems. I participated in the fifth track and won the first prize on the manufacturing part. For the Restaurant part, I only finished second despite my best results because the SOE metric was presented after the end of my internship so I ended up with 0.0 on this category.
+		</div>
+		<br>
+		<img class="full" src="assets/kyushu/KyushuResults.jpg" title="IPIN 2019's results for Track 5" alt="IPIN 2019 Results Track 5">
+		<nav class="tight undertow forehead" aria-label="plunge" id="plunge">
+			<a class="finger bae-rock hella">Inputs</a>
+		</nav>
+		<div class="text">
+			The inputs are composed of all PDR information (acceleration and rotation) and Bluetooth Low Energy (BLE) signals received. The framework developed only rely on the latest, BLE.
+		</div>
+		<nav class="tight undertow forehead" aria-label="plunge" id="plunge">
+			<a class="finger bae-rock hella">Framework</a>
+		</nav>
+		<div class="text">
+			The framework can be divided into three sub-parts
+			<ul>
+				<li>Localization</li>
+				<li>Interpolation</li>
+				<li>Optimization</li>
+			</ul>
+			We firstly localize a maximum number of positions of the person using BLE. I tested various methods (Multilateration, IA, PDR) but the best was Weighted Centroid Localization (WCL) with unity-based normalization and a custom weighting function. The benchmarks were made to search for efficiency and robustness. K is the number of beacons available, being efficient with a low K is proof of robustness.
+		</div>
+		<img class="full" src="assets/kyushu/MSE.jpg" title="Mean squared error of multiple localization techniques" alt="MSE Localization Techniques">
+		<div class="text">
+			However, there are many moments where there is no BLE information. It's necessary to estimate properly the position at 10Hz so I made a function computing velocity and interpolating all positions.
+			<br>
+			The last part of the framework is a particle filter which is based on Bayesian filtering. It smooth the signal with Gaussian noise thanks to the particles. The plausibility of all particles leads to the final updated positions at 10Hz.
+			All the incorrect particles are removed which also prevent from going inside or toward walls as we can see in the example below.
+		</div>
+		<img class="full" src="assets/kyushu/Dodge.jpg" title="Dodging with Particle Filtering" alt="Dodging Particle Filtering">
+	</nav>
+
+	<div id="footer" class="forehead +++"></div>
+</body>
+</html>
