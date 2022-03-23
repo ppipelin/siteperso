@@ -1,0 +1,6 @@
+[submodule "experiments/chesstrainer"]
+	path = experiments/chesstrainer
+	url = https://github.com/ppipelin/chesstrainer.git
+[submodule "experiments/webgltracer"]
+	path = experiments/webgltracer
+	url = https://github.com/ppipelin/webgltracer.git

@@ -1,0 +1,23 @@
+# Options +MultiViews 
+# AddLanguage fr fr 
+# AddLanguage en en 
+# LanguagePriority en fr
+RewriteEngine On
+
+RewriteCond %{HTTP:Accept-Language} ^en [NC]
+RewriteRule ^ - [S=5]
+RewriteRule ^$ /fr/
+RewriteRule ^(gallery)?/$ /fr/$1
+RewriteRule ^(resume)?/$ /fr/$1
+RewriteRule ^(works/kyushu)?/$ /fr/$1
+RewriteRule ^(gallery/raytracing)?/$ /fr/$1
+RewriteRule ^(gallery/blender)?/$ /fr/$1
+
+RewriteCond %{HTTP:Accept-Language} ^fr [NC]
+RewriteRule ^ - [S=5]
+RewriteRule ^$ /en/
+RewriteRule ^(gallery)?/$ /en/$1
+RewriteRule ^(resume)?/$ /en/$1
+RewriteRule ^(works/kyushu)?/$ /en/$1
+RewriteRule ^(gallery/raytracing)?/$ /en/$1
+RewriteRule ^(gallery/blender)?/$ /en/$1

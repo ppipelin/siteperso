@@ -1,0 +1,163 @@
+::selection {
+	background: Indigo;
+	color: PowderBlue;
+}
+
+:link:hover, :focus {
+	outline-color: Black;
+	outline-width: 0.25rem;
+	outline-style: solid;
+}
+
+:link:hover:not(.img) {
+	filter: invert(100%);
+}
+
+:link {
+	transition: 100ms;
+	transition-property: filter;
+}
+
+* {
+	box-sizing: border-box;
+	text-align: justify;
+}
+
+html {
+	line-height: 2;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	font-family: Montserrat, sans-serif;
+	margin: auto;
+	padding: 1em;
+	padding: 2vw;
+}
+
+img.full {
+	max-width:100%;
+	max-height:100%;
+}
+
+.finger {
+	margin: 0;
+	display: table;
+	padding: .236em .618em;
+	line-height: 2;
+	font-size: inherit;
+}
+
+.finger.inline {
+	display: inline-block;
+}
+
+a {
+	text-decoration: underline;
+}
+
+.finger + .finger {
+	margin-top: -1px;
+}
+
+/*.finger + .finger {
+	margin-top: -1px;
+}*/
+
+.relax {
+	font: inherit;
+}
+
+.tight {
+	margin: 0;
+	padding: 0;
+}
+
+.hella {
+	font-weight: bold;
+}
+
+.charming {
+	font-family: Quicksand;
+}
+
+.midly {
+	text-align:center;
+}
+
+.undertow {
+	margin-bottom: 2rem;
+}
+
+.stormsurge {
+	margin-bottom: 5rem;
+}
+
+.forehead {
+	margin-top: 2rem;
+}
+
+.touchable {
+	cursor: pointer;
+}
+
+@media (min-width: 20rem) {
+	.\+\+ { font-size: 1.22em }
+	.\+\+\+ { font-size: 1.66em }
+	.\+\+\+\+ { font-size: 2.66em }
+}
+
+.avoid {
+	display: none !important;
+}
+
+.text {
+	font-size: 0.8em;
+}
+
+/*Bae : https://github.com/s9a/bae*/
+.bae-clean:not(.bae-unclean),
+.bae-clean:not(.bae-unclean){background:transparent; color:inherit}
+.bae-flat:not(.bae-unflat),
+.bae-flat:not(.bae-unflat){border-color:transparent}
+.bae-warm{color:#415!important;background:#bae!important}
+.bae-cool{color:#bae!important;background:#415!important}
+.bae-dawn{color:#510!important;background:#bae!important}
+.bae-dusk{color:#bae!important;background:#510!important}
+.bae-vine{color:#707!important;background:#4ea!important}
+.bae-vein{color:#4ea!important;background:#707!important}
+.bae-swag{color:#925!important;background:#bff!important}
+.bae-swab{color:#bff!important;background:#925!important}
+.bae-gold{color:#707!important;background:gold!important}
+.bae-rush{color:gold!important;background:#707!important}
+.bae-wish{color:#bae4ea!important;background:#415!important}
+.bae-wash{color:#415!important;background:#bae4ea!important}
+.bae-rock{color:#F0EAD6!important;background:#615550!important}
+.bae-lightrock{color:#e3d9b5!important;background:#7e6e67!important}
+.bae-stagram{color:#fcaf45!important;background:#415ce7!important}
+.bae-kdin{color:#000000!important;background:#0077b5!important}
+.bae-retro{color:Black!important;background:WhiteSmoke!important}
+
+/*Responsive*/
+@media (max-width: 575px) {
+	h1 {  
+		font-size: 1.5rem; 
+	}
+	h2 {  
+		font-size: 1.25rem; 
+	}
+	h3 { 
+		font-size: 1rem;
+	}
+	.row {
+		margin-left: 0px;
+		margin-right: 0px;
+	}
+	@media (min-width: 20rem) {
+		.\+\+ { font-size: 1em }
+		.\+\+\+ { font-size: 1.5em }
+		.\+\+\+\+ { font-size: 2.22em }
+	}
+	}
+	

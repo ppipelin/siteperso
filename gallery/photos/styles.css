@@ -1,0 +1,46 @@
+.thumb {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.my-gallery {
+	width: 100%;
+	float: left;
+}
+.my-gallery img {
+	width: 100%;
+	height: auto;
+}
+.my-gallery figure {
+	display: block;
+	float: left;
+	margin: 0 5px 5px 0;
+	width: 30%;
+}
+.my-gallery figcaption {
+	display: none;
+}
+.category{
+	float: right;
+}
+/*Responsive*/
+@media (max-width: 575px) {
+	.my-gallery figure {
+		width: 95%;
+	}
+}
+
+.iframe-container {
+	overflow: hidden;
+	padding-top: 56.25%;
+	position: relative;
+}
+
+.iframe-container iframe {
+	border: 0;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+}

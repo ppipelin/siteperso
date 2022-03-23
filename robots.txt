@@ -1,0 +1,3 @@
+Sitemap: https://pipelin.fr/sitemap.xml
+User-agent:*
+Disallow:

@@ -1,0 +1,39 @@
+body { background:#ff7b25; }
+#snow{
+	background: none;
+	/*font-family: Androgyne;*/
+	background-image: url('/assets/fire.svg'), url('/assets/fire-tile.svg'), url('/assets/fire-tile-2.svg');
+	background-size: 10em;
+	/*font-size: 0.2em;*/
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	z-index: 0;
+	-webkit-animation: snow 1000s linear infinite;
+	-moz-animation: snow 1000s linear infinite;
+	-ms-animation: snow 1000s linear infinite;
+	animation: snow 1000s linear infinite;
+	-webkit-transform: translate3d(0,0,0);
+	-moz-transform: translate3d(0,0,0);
+	-ms-transform: translate3d(0,0,0);
+	-o-transform: translate3d(0,0,0);
+	transform: translate3d(0,0,0);
+}
+@keyframes snow {
+	0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+	50% {background-position: 50000px 50000px, 10000px 20000px, -10000px 15000px;}          
+}
+@-moz-keyframes snow {
+	0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+	50% {background-position: 50000px 50000px, 10000px 20000px, -10000px 15000px;}          
+}
+@-webkit-keyframes snow {
+	0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+	50% {background-position: 50000px 50000px, 10000px 20000px, -10000px 15000px;}          
+}
+@-ms-keyframes snow {
+	0% {background-position: 0px 0px, 0px 0px, 0px 0px;}
+	50% {background-position: 50000px 50000px, 10000px 20000px, -10000px 15000px;}          
+} 

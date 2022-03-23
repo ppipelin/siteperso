@@ -1,0 +1,11 @@
+.clear { clear: both; }
+dd.clear { height: 4em; }
+.dt { font-style: italic; text-align: right; padding: 0 1.5em 0 0; border-right: 1px solid #999; }
+.dtcol { font-style: italic; padding: 0 1.5em 0 0; border-bottom: 1px solid #999;}
+.location { color: #5c5c8a; text-align: right;}
+div:not(#footer #header) { margin: 1em }
+
+/*Responsive*/
+@media (max-width: 575px) {
+	dd.clear { height: 1em; }
+}

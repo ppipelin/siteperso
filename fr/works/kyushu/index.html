@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr"  style="background: #fafdfe">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91929483-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-91929483-3');
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script> 
+		$(function(){
+			$("#header").load("header.html"); 
+			$("#footer").load("footer.html"); 
+		});
+	</script>	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Paul-Elie Pipelin">
+	<meta name="description" content="Stage de recherche en localisation en intérieur à l'université de Kyushu, Fukuoka, Japon. Site personnel de Paul-Elie Pipelin, ingénieur en image numérique">
+	<meta name="keywords" content="Kyushu, Université, Recherche, IPIN, 2019, Ingénieur, Paul-Elie, Pipelin, Numérique, Image">
+	<meta name="theme-color" content="#36a1b0">
+
+	<title>Paul-Élie Pipelin - Kyushu</title>
+	<base href="/">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:200,300|Quicksand:300,400|Roboto">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="gallery/styles.css">
+	<link rel="icon" type="image/x-icon" href="assets/Torch.png">
+</head>
+<body>
+	<a class="finger hella bae-rock +" href="fr/works/kyushu">
+		english
+	</a>
+	<a class="finger hella bae-rock +" href="en/works/kyushu">
+		français
+	</a>
+
+	<div id="header">
+		<h1 class="forehead undertow charming hella ++++">
+			Paul-Élie Pipelin
+		</h1>
+	</div>
+
+	<!------------------------------------------------>
+
+	<nav class="tight stormsurge +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella" href="fr/">home</a>
+		<a class="finger bae-rock hella" href="fr/resume/">résumé</a>
+
+	</nav>
+	
+	<!------------------------------------------------>
+
+	<nav class="tight stormsurge +++" aria-label="plunge" id="plunge">
+		<div class="text">
+			Durant l'été 2019, j'ai travaillé en tant que stagiaire pendant 3 mois pour le laboratoire de recherches <a href="http://limu.ait.kyushu-u.ac.jp/" target="_blank">LIMU</a> de l'Université de Kyūshū à Fukuoka au Japon. Ce stage a été supervisé par le professeur associé <a href="http://limu.ait.kyushu-u.ac.jp/~uchiyama/me/index_e.html" target="_blank">Hideaki Uchiyama</a>. J'ai principalement travaillé à la création d'un logiciel de localisation en intérieur.
+		</div>
+		<nav class="tight undertow forehead" aria-label="plunge" id="plunge">
+			<a class="finger bae-rock hella">Compétition</a>
+		</nav>
+		<div class="text"> 
+			Le but principal de ce stage était de participer à l'une des catégories de la <a href="http://ipin-conference.org/2019/cfc.html" target="_blank">compétition</a> organisée par l'IPIN 2019. Ainsi, chaque travaux comme de la documentation de la recherche ou de l'implémentation, devait permettre à résoudre le problème posé par cette compétition. Cette dernière se divise en cinq catégories relatives à des problèmes de localisation en intérieur différents. J'ai participé à la cinquième catégorie et ai remporté le premier prix pour la partie étudiant un milieu industriel. Pour la partie étudiant un restaurant, je suis seulement arrivé deuxième malgré mes meilleurs résultats parce que la métrique SOE a été présentée après la fin de mon stage, le système a donc obtenu 0.0 dans avec cette métrique.
+		</div>
+		<br>
+		<img class="full" src="assets/kyushu/KyushuResults.jpg" title="IPIN 2019's results for Track 5" alt="IPIN 2019 Results Track 5">
+		<nav class="tight undertow forehead" aria-label="plunge" id="plunge">
+			<a class="finger bae-rock hella">Données d'entrée</a>
+		</nav>
+		<div class="text">
+			Les données fournis sont composées des information de PDR (acceleration and rotation) et les signaux Bluetooth Low Energy (BLE) reçus. Le système développé ne se base que sur ces derniers, les signaux BLE.
+		</div>
+		<nav class="tight undertow forehead" aria-label="plunge" id="plunge">
+			<a class="finger bae-rock hella">Système</a>
+		</nav>
+		<div class="text">
+			Ce système de localisation en intérieur peut se diviser en trois sous-parties
+			<ul>
+				<li>Localisation</li>
+				<li>Interpolation</li>
+				<li>Optimisation</li>
+			</ul>
+			Tout d'abord, nous localisation un maximum de positions de la personne étudiée via le BLE. Pour ceci, j'ai testé plusieurs méthodes (Multilateration, IA, PDR). La meilleur s'est avérée être la <i>Weighted Centroid Localization</i> (WCL) avec une normalisation unitaire (unity-based normalization) et une fonction de pondération personnalisée. Des tests ont été effectués pour rechercher à la fois une meilleure efficacité mais aussi une meilleure robustesse. K étant le nombre de balises disponibles au temps t, être efficace avec un K faible prouve la robustesse d'une méthode.
+		</div>
+		<img class="full" src="assets/kyushu/MSE.jpg" title="Mean squared error of multiple localization techniques" alt="MSE Localization Techniques">
+		<div class="text">
+			Cependant, il y a beaucoup de moments où aucun signal BLE n'est capté ce qui rend impossible la localisation. Il est pourtant nécessaire de connaître la position de la personne à localiser à une fréquence de 10Hz. J'ai donc implémenté une fonction calculant la vélocité et interpolant entre les positions connues.
+			<br>
+			La dernière partie du système est un filtrage particulaire basé sur les filtres bayésiens. Ce dernier filtre le signal avec un bruit gaussien par l'utilisation de particules. La vraisemblance de chaque particules nous permet d'obtenir la position finale à 10Hz. Toutes les positions incorrectes des particules sont supprimées permettant aussi d'empêcher au système d'aller à l'intérieur ou de se diriger totalement en direction d'un mur comme nous pouvons le voir ci-dessous.
+		</div>
+		<img class="full" src="assets/kyushu/Dodge.jpg" title="Dodging with Particle Filtering" alt="Dodging Particle Filtering">
+	</nav>
+
+	<div id="footer" class="forehead +++"></div>
+</body>
+</html>

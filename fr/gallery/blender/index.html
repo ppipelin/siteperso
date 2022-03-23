@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="fr"  style="background: #fafdfe">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91929483-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-91929483-3');
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script> 
+		$(function(){
+			$("#header").load("header.html"); 
+			$("#footer").load("footer.html"); 
+		});
+	</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Paul-Elie Pipelin">
+	<meta name="description" content="Blender renders. Personal site of Paul-Elie Pipelin, engineer in digital imaging.">
+	<meta name="keywords" content="Blender, Tracing, Ray, Path, Synthesis, Rendering, Engineer, Paul-Elie, Pipelin, Digital, Imaging, Computer, Graphics">
+	<meta name="theme-color" content="#36a1b0">
+
+	<title>Paul-Élie Pipelin - Rendus Blender</title>
+	<base href="/">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:200,300|Quicksand:300,400|Roboto">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+	<link rel="stylesheet" href="gallery/styles.css">
+	<link rel="icon" type="image/x-icon" href="assets/Torch.png">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/blazy/1.8.2/blazy.min.js"></script>
+	<script>
+		var blazy = new Blazy({
+		container: '#container' // Default is window
+		});
+	</script>
+</head>
+<body>
+	<a class="finger hella bae-rock +" href="en/gallery/blender">
+		english
+	</a>
+	<a class="finger hella bae-rock +" href="fr/gallery/blender">
+		français
+	</a>
+
+	<div id="header">
+		<h1 class="forehead undertow charming hella ++++">
+			Paul-Élie Pipelin
+		</h1>
+	</div>
+
+	<!------------------------------------------------>
+
+	<nav class="tight stormsurge +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella" href="fr/">home</a>
+		<a class="finger bae-rock hella" href="fr/gallery">gallery</a>
+	</nav>
+
+	<!------------------------------------------------>
+	<h1>Rendus Blender</h1>
+	Cette page présente des rendus <strong><em>non finaux</em></strong> de scènes 3D que j'ai créé avec Blender sur mon temps libre.
+	<br>
+	Ces deux scènes m'ont servi d'entraînement et font partie de mes premiers projets Blender.
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/MeyerGlared.jpg" title="Blender renders of Meyerowitz stairway" alt="Blender Render Cycles Meyerowitz Stairway">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/HouseComposite.jpg" title="Blender renders of a house between mountains" alt="Blender Render Cycles House Mountains Particles">
+		</div>
+	</div>
+	La première image est inspirée d'une photo de Joel Meyerowitz d'un escalier tiré de son livre : <a href="https://www.joelmeyerowitz.com/publications-/cape-light-new-edition">Cape Light</a>. 
+	<br>
+	La seconde est inspirée d'une <a href="https://www.youtube.com/watch?v=iFQokXmqmVQ">video</a> de Blender Guru. Le principal challenge était de créer de l'entropie avec un nombre important d'objets en utilisant le système de particules. 
+	<br>
+	Ci-dessous se trouve la scène de la première image ainsi que son maillage.
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/MeyerScene.jpg" title="Blender scene from Meyerowitz's photo" alt="Blender Scene Meyerowitz">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/MeyerSceneMesh.jpg" title="Blender scene's mesh from Meyerowitz's photo" alt="Blender Scene Meyerowitz Mesh">
+		</div>
+	</div>
+	Beaucoup de matériaux sont procéduraux. C'est par exemple le cas d'une des textures de bois qui utilise les texures noise, mustgrave, wave et voronoi qui sont analytiques. Ces texutres s'appliquent sur la couleur mais aussi sur les normales, la rugosité ou encore la spécularité. Elles ont aussi permis d'ajouter de l'entropie et des détails pour obtenir un résultat plus réaliste.
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/MeyerWood.jpg" title="Zoom on wood material from Meyerowitz's photo scene" alt="Blender Material Meyerowitz">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/MeyerWoodNodes.jpg" title="Nodes used to create wood" alt="Nodes Blender Material Meyerowitz">
+		</div>
+	</div>
+	La seconde scène utilise beaucoup de particules pour simuler la végétation. Les arbres lointains sont en réalité de grosses touffes d'herbe. Les images ci-dessous montrent la géométrie de la scène ainsi que 10% des particules utilisées pour le rendu.
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/HouseScene.jpg" title="Blender scene of wood cabin between mountains" alt="Blender Scene Cabin Wood Mountains">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/HouseSceneParticles.jpg" title="Blender scene of wood cabin between mountains with particles" alt="Blender Scene Cabin Wood Mountains Particles System">
+		</div>
+	</div>
+	J'ai utilisé le <i>weight painting</i> et le <i>vertex painting</i> pour alterner entre la terre et les rochers pour les montagnes.
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/HouseScenePaint.jpg" title="Weight paint for particle system" alt="Blender Weight Paint Particles System">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/HouseSceneMaterials.jpg" title="Vertex paint for change of materials" alt="Blender Vertex Paint Materials">
+		</div>
+	</div>
+	Les deux rendus ont été débruités grâce au débruiteur d'Intel lors du <i>compositing</i>.
+	<div class="row forehead undertow">
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/MeyerZoomGlared.jpg" title="Zoom on render without noise" alt="Zoom Render Denoised Intel">
+		</div>
+		<div class="col-sm-auto">
+			<img class="finger thumb" src="assets/blender/MeyerZoomLayer.jpg" title="Zoom on noisy render" alt="Zoom Render Noise">
+		</div>
+	</div>
+
+	<div id="footer" class="forehead +++"></div>
+</body>
+</html>

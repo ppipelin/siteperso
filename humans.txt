@@ -1,0 +1,19 @@
+/* TEAM */
+	Your title: Paul-Elie (Paul-Élie) Pipelin.
+
+	Site: paul.elie.pipelin@gmail.com, pipelin.fr
+
+	Location: Rennes, France
+
+
+/* THANKS */
+	Name: Ryan Van Etten for styling : https://ryanve.com
+
+/* SITE */
+	Last update: 2022/03/20
+
+	Standards: HTML5, CSS3, WEBGL, JS...
+
+	Components: Bootstrap
+
+	Software: Magnificent Brain
