@@ -1,0 +1,19 @@
+e4 c5 cf3 d6 d4 xd4 xcd4 cf6 cc3 a6
+	fe3 e5
+		cb3 fe6
+			dd2 cbd7
+				f3
+				0-0-0 fe7
+			h3 fe7
+			f3 fe7 dd2 0-0 0-0-0 cbd7 g4 b5 g5 b4 ce2 ce8 f4 a5 f5 a4
+			fe2 fe7 0-0 0-0 dd3 cbd7 cd5 xfd5 xd5 cc5 xcc5 xc5
+		cf3 fe7 fc4 0-0 0-0 fe6 fb3 cc6
+	fe2 e5
+#		cf3 h6 0-0 fe6 te1 fe7 ff1 0-0 //classical_version_1
+		cb3 fe7
+#			fe3 0-0 g4 fe6 g5 cfd7 //classical_version_2_1
+			0-0 0-0 fe3 fe6
+#				cd5 xcd5 xed5 cf5 //classical_version_2_2_1
+#				dd2 cbd7 a4 tc8 a5 dc7 //classical_version_2_2_2
+				de1 b5 f4 b4 cd5 xfd5 xed5 xcd5 ff3 xce3 xde3 xef4 xdf4 db6+ //classical_corrected
+#	bg5 e6 f4 db6 dd2 xdb2 tb1 da3 f5 cc6 xe6 xe6 xcc6 xc6 fe2 fe7 0-0 0-0 tb3 dc5+ fe3 de5 fd4 da5 fb6 de5 //poisoned_pawn

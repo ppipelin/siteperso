@@ -1,0 +1,47 @@
+e4
+	d5
+		d3 xe4 xe4 xdd1+ xrd1 f5
+			xf5 xff5 cc3 cc6 fb5 0-0-0+ fd2 cd4 fa4 e5
+			f3 xe4 xe4 cf6 cc3 cc6 cb5 fg4 cf3 0-0-0+ fd2 e5
+		cc3 xe4 xce4 ff5 cg3 fg6 cf3 cd7 d4 cgf6 fc4 e6 0-0 fe7 fg5 0-0 te1 c5
+			c3 xd4 xd4 cb6 fe3
+			xc5 xcc5
+		cf3 xe4 cg5 cf6 cc3 ff5 fc4 e6 d3 xd3 xd3
+		e5 c5 cf3 fg4
+			fe2 cc6 0-0 xff3 xff3 xce5
+			d4 xd4 xdd4 xff3 xf3 cc6 fb5 e6 fe3 cge7 cc3 a6
+				xfc6 xcc6
+				fd3 xcd4
+				fa4 b5 fb3 xcc4
+			c3 cc6 d4 xff3
+				xdf3 xd4 xd4 xcd4
+				xf3 e6 fd3 ce7
+		xd5
+#			xdd5 cc3
+#				da5
+#				dd6
+			cf6
+				c4 c6 xc6 xcc6 cf3 e5
+					cc3 e4 
+						ch4 g5
+						cg5 ff5 de2 cd4 dd1 e3 d3 xf3+ xrf3 cg4+
+					d3 e4 xe4 dd1+ xrd1 ce4 fe3 ff5 cd2 0-0-0 rc1 xcd2 xcd2 cb4
+				cc3 xcd5 xcd5 xdd5
+					c4 de4+
+						fe2 xdg2
+						ce2 xdc4
+						de2 xde2 xce2 e5
+					cf3 e5 d3 cc6 fe2 fg4 0-0 0-0-0 h3 fe6 fe3 f6 //attacks_kingside_with_pawns
+				fb5+ fd7 xfd7 xdd7 c4 c6 xc6 xcc6 TRANSPOSE
+				cf3 xcd5 d4 g6
+					c3 fg7
+					c4 cb6
+						c5 cd5
+						cc3 fg7 fe2 0-0 0-0 fg4 fe3 cc6
+							c5 cd5 tc1 dd7
+							d5 xff3 xff3 ce5
+								b3 xcf3 xdf3 xfc3 xfb6 xfa1 xta1 xab6 //white_error
+								xfb6 xab6 fe2 //best_for_white
+				d4 xcd5 cc3 xcc3 xc3 g6 cf3 fg7 fc4 0-0 0-0 c5
+					xc5 dc7
+					fe3 cc6 te1 fg4 g3 xff3 xdf3 xd4 xd4 xcd4 xfd4 xdd4 fb3 e6 xdb7 xda1 xfa1

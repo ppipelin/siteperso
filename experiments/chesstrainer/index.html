@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en"  style="background: #fafdfe">
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91929483-3"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag("js", new Date());
+
+		gtag("config", "UA-91929483-3");
+	</script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script> 
+		$(function(){
+			$("#header").load("header.html"); 
+			$("#footer").load("footer.html"); 
+		});
+	</script>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Paul-Elie Pipelin">
+	<meta name="description" content="A tool to train chess openings. Personal site of Paul-Elie Pipelin, engineer in digital imaging.">
+	<meta name="keywords" content="Chess, Opening, Engineer, Paul-Elie, Pipelin, Digital, Imaging, Computer, Graphics">
+	<meta name="theme-color" content="#36a1b0">
+
+	<title>Paul-Élie Pipelin - Chess Trainer</title>
+	<base href="/">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat|Playfair+Display:200,300|Quicksand:300,400|Roboto">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+	<link rel="stylesheet" href="styles.css">
+	<!-- <link rel="stylesheet" href="experiments/styles.css"> -->
+	<link rel="icon" type="image/x-icon" href="../assets/Torch.png">
+	<script type="module" id="chessmodule" src="https://unpkg.com/chessboard-element?module"></script>
+	<script type="text/javascript">document.getElementById("chessmodule").onload = function(e){
+		jQuery.loadScript = function (url, callback) {
+			jQuery.ajax({
+				url: url,
+				dataType: "script",
+				success: callback,
+				async: true
+			});
+		}
+		$.loadScript("experiments/chesstrainer/script.js", function(){
+			loadboard("experiments/chesstrainer/dragon_accelerated.chess", "black");
+			console.log(board);
+		});	
+	}
+	</script>
+</head>
+<body>
+	<a class="finger hella bae-rock +" href="experiments/chesstrainer">
+		english
+	</a>
+	<a class="finger hella bae-rock +" href="experiments/chesstrainer">
+		français
+	</a>
+
+	<div id="header">
+		<h1 class="forehead undertow charming hella ++++">
+			Paul-Élie Pipelin
+		</h1>
+	</div>
+
+	<!------------------------------------------------>
+
+	<nav class="tight stormsurge +++" aria-label="plunge" id="plunge">
+		<a class="finger bae-rock hella" href="">home</a>
+		<a class="finger bae-rock hella" href="experiments"><code>experiments</code></a>
+	</nav>
+
+	<!------------------------------------------------>
+	
+	<div class="container tight">
+		<div class="row">
+			<div class="col-md-5">
+				<chess-board
+					style="width: 90%; min-width: 300px"
+					draggable-pieces
+					move-speed="slow">
+				</chess-board>
+			</div>
+			<div class="col-md-7" id="chess_text1">
+				<div class="row">
+					<div class="col-8">
+						<div class="hella">History: </div>
+						<div class="overflow-auto p-3 bg-light" id="chess_text" style="max-height: 300px"></div>
+					</div>
+					<div class="col-4">
+						<div class="custom-control custom-switch" id="hint_dad">
+							<input type="checkbox" class="custom-control-input" id="hint_toggle" onclick="document.getElementById('hint_text').style.visibility = (document.getElementById('hint_toggle').checked ? 'visible':'hidden')">
+							<label class="custom-control-label" for="hint_toggle">Hint</label>
+							<div id="hint_text" style="visibility: hidden;">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<button onclick="loadboard()">reset</button>
+	<button onclick="playNext()">next move</button>
+	<button onclick="playAuto()">play auto</button>
+	<br>
+	<br>
+	<textarea class="textarea resize-ta" id="tree_text" style="font-size: 0.7em; width: 90%;min-width: 300px;resize: both;" notab="notab"></textarea>
+	<br>
+	<button onclick="loadGame('experiments/chesstrainer/scandinavian.chess', 'black')">Load Scandinavian</button>
+	<button onclick="loadGame('experiments/chesstrainer/najdorf.chess', 'black')">Load Najdorf</button>
+	<button onclick="loadGame('experiments/chesstrainer/scotch.chess', 'white')">Load Scotch</button>
+	<button onclick="loadGame('experiments/chesstrainer/dragon_accelerated.chess', 'black')">Load Accelerated Dragon</button>
+	<div>
+		This tool was made for training defenses. You are supposed to respond theorically to an attack from the whites. All the possible attacks and responses are stored in a <code>.chess</code> extension. Feel free to create new ones and send it to me.
+	</div>
+	<div>
+		New contents incoming : attack selecting for custom training & statistics & new <code>.chess</code>. 
+	</div>
+	<br>
+	<div>
+		Board from <a href="https://github.com/justinfagnani/chessboard-element">justinfagnani</a>
+	</div>
+	<div id="footer" class="forehead +++"></div>
+</body>
+</html>

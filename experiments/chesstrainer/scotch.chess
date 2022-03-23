@@ -1,0 +1,36 @@
+e4 e5 cf3 cc6 d4
+#	d6 xe5 xe5 xdd8+ xrd8 fc4 f6 fe3
+	xd4 xcd4
+		xcd4 xdd4
+			c5 dd3 d6 ff4 cf6 cc3 fe7 td1
+			cf6 e5 ch5 g4
+			d6 cc3 cf6 f3 fe7 fe3 0-0 0-0-0 fe6 g4 //marrée_pion
+			df6 e5 db6 xdb6 xab6 ff4
+				f6 xf6 xf6 xfc7
+				d6 xd6 xfd6 xfd6 xd6 cc3
+		fc5 fe3
+			cf6 xcc6 xbc6 xfc5
+			d6 xcc6 xc6 xfc5 xc5 xdd8+ xrd8 fc4
+			df6 c3 cge7 g3
+				0-0 fg2 d6 0-0
+					td8 f4 d5 e5 dg6 f5 xcf5 xcf5
+						xfe3 xce3
+						xfe5 xfc5
+					ce5 h3 cc4 fc1 td8 b3 ce5 rh2 d5 f4 ce5c6 e5 dg6 g4 //f5_&_cd4_coming
+				d5 fg2 xe4 cb5
+					fd6 xcd6 xd6 xfe4
+					fb6 xfb6 xcb6 cc7+
+					xfe3 cc7+ rf8 0-0 tb8 xe3 de5 db3 f5 cb5
+		cf6 cc3
+#			d6 f4 //transpose_take_space
+			fb4 xcc6 xbc6 fd3
+				xfc3 xbc3 d5 xd5 xd5 0-0 0-0 c4
+					xc4 xfc4
+					d4 te1 c5 df3 tb8 fg5 tb6 te5
+				d5 xd5 xd5 0-0 0-0 fg5 c6 df3 fd6 h3 te8 tfe1 fe6 ce2 //cd4_cf5
+			g6 fe3 fg7 ccc6 xbc6 e5 cg8 f4 f6 fc4 xe5 0-0 d5 xcd5 xd5 xfd5 tb8 ff7+ re7 fc5+ xrf7 xdd8
+# MIESES
+#		cf6 xcc6
+#				xbc6 e5 //MIESES
+#				xbc6 fd3 d5 xd5 xd5 0-0 c4 //theorie?
+#				xdc6 xqd8+ xrd8 cc3 fb4 fd2 fe6 a3
