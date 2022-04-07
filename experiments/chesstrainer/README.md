@@ -1,5 +1,5 @@
 # Chesstrainer
----------------
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/ppipelin/chesstrainer/pages%20build%20and%20deployment?label=github-pages)
 
 This is a framework for training chess opening. Currently Scandinavian, Scotch and Najdorf.
 
