@@ -71,7 +71,7 @@
 	During the third and last year at ESIR, I participated in an <a class="finger bae-rock inline" href="en/gallery/raytracing/#industrial">industrial project</a> about image synthesis as well.
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Ray tracing - Phong</a>
+		<figure class="finger bae-rock hella">Ray tracing - Phong</figure>
 	</nav>
 
 	Here is three images of the same scene. One only by colors, the second with Phong shader and the last just adds a tweaky hack named soft shadow which is basically ambient.
@@ -109,7 +109,7 @@
 	</div>
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Path Tracing</a>
+		<figure class="finger bae-rock hella">Path Tracing</figure>
 	</nav>
 
 	We then added indirect lightning, light surface, stratification of lights and pixels (to  reduce variance between samples) and refraction. We also defined few more primitives such as spheres, annulus and cylinders to get perfect shapes. This engine embed a real-time visualizer thanks to upscaling, providing a more fluid camera. Hence, many features are toggled by keyboard.
@@ -133,7 +133,7 @@
 	</div>
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Real Time</a>
+		<figure class="finger bae-rock hella">Real Time</figure>
 	</nav>
 
 	We added realtime support in our application, which permitted us to debug and place components easily. It also helped to choose precisely rendering options. This real time feature achieve to have good performances thanks to an automatic decrease of the number of sent rays when moving the camera. The image will auto scale back to normal on stop, allowing an infinite number of passes and antialiasing.
@@ -141,7 +141,7 @@
 	<!-- Montrer toggle des heatmap + normales -->
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella" name="industrial">Industrial Project</a>
+		<figure class="finger bae-rock hella" name="industrial">Industrial Project</figure>
 	</nav>
 
 	Last year at ESIR embedded an industrial project proposed by an enterprise. The latter where I participated was proposed by Chaos Czech which develop the <a href="https://corona-renderer.com/">Corona Renderer</a>. This project driven by four persons consists in implementing Optimal Multiple Importance Sampling in a bidirectional path tracer. It is also totally necessary to be unbiased. Here are presented the steps of the project, beginning with a small skill upgrading embedding Multiple Importance Sampling, Light Tracing and Bidirectional Path Tracing.  
@@ -193,7 +193,7 @@
 	</div>
 
 	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Bidirectional Path Tracing</a>
+		<figure class="finger bae-rock hella">Bidirectional Path Tracing</figure>
 	</nav>
 
 	The BDPT is implemented with the <i>balance heuristic</i>. It allows complex paths like caustics to be traced which is necessary in some scenes. Here are successively Naive Path Tracing, Light Tracing and Bidirectional Path Tracing rendered with a high number of passes : 1024. The BDPT is the fusion of PT an LT in a sense that it computes all the possibilities of sampling a single path with these two techniques.
@@ -212,7 +212,7 @@
 	</div>
 
 	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">OptiMIS</a>
+		<figure class="finger bae-rock hella">OptiMIS</figure>
 	</nav>
 
 	The complete minimization of Monte Carlo estimator variance with the releasing of the weighting constraint between 0 and 1 proposed by <a href="https://www.researchgate.net/profile/Pascal_Grittmann/publication/334433762_Optimal_multiple_importance_sampling/links/5d2c695da6fdcc2462e12f96/Optimal-multiple-importance-sampling.pdf" target="_blank">Kondapaneni et. al.</a> led once again to a better variance minimization of rendered images. This method is based on the estimation of a linear system with de number of passes which permits to calculate the optimal weights to apply.

@@ -71,7 +71,7 @@
 	Pendant la troisième et dernière année à l'ESIR, j'ai participé à un <a class="finger bae-rock inline" href="fr/gallery/raytracing/#industrial">projet industriel</a> sur de la synthèse d'image lui aussi.
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Ray tracing - Phong</a>
+		<figure class="finger bae-rock hella">Ray tracing - Phong</figure>
 	</nav>
 
 	Ci-dessous, trois images d'une même scène 3D. La première uniquement composée des couleurs, la seconde utilisant le shader de Phong et la dernière simulant des ombres douces à l'aide d'une lumière ambiante.
@@ -109,7 +109,7 @@
 	</div>
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Path Tracing</a>
+		<figure class="finger bae-rock hella">Path Tracing</figure>
 	</nav>
 
 	Nous avons ensuite ajouté la lumière indirecte, les lumières surfaciques, la stratification des pixels (pour réduire la variance) ainsi que la réfraction. Nous avons ensuite ajouté quelques nouvelles primitives telles que les sphères, anneaux ou cylindres permet de baisser le nombres de primitives et d'améliorer la précision des scènes. Ce moteur est doté d'un rendu temps réel grâce à de l'upscaling, permettant une gestion plus fluide de la caméra. La plupart des fonctions sont donc ainsi gérées depuis le clavier.
@@ -136,7 +136,7 @@
 	</div>
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Temps réel</a>
+		<figure class="finger bae-rock hella">Temps réel</figure>
 	</nav>
 
 	Le temps réel fut une grande aide pour le débuggage de l'application. Cela a notamment permis de choisir précisément les options de rendus pour nos scènes. Cette option maintiens tout de même de bonnes performances (10-100FPS en fonctions des options sélectionnées) grâce à un upscale et downscale automatique. A l'arrêt, l'image devient de plus en plus nette, permettant de l'antialiasing et du débruitage sur un nombre de passes infini.
@@ -145,7 +145,7 @@
 	<!-- Montrer toggle des heatmap + normales -->
 
 	<nav class="tight undertow forehead +++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella" name="industrial">Projet Industriel</a>
+		<figure class="finger bae-rock hella" name="industrial">Projet Industriel</figure>
 	</nav>
 
 	La dernière année à l'ESIR comprend la réalisation d'un projet industriel proposé par une entreprise. Le projet industriel auquel j'ai participé a été proposé par Chaos Czech l'entreprise développant le <a href="https://corona-renderer.com/">Corona Renderer</a>. Ce projet regroupe quatre personnes et consiste en l'implémentation d'un Échantillonnage à Multiple Importances Optimal dans un path tracer bidirectionnel. Il est notamment essentiel que ce dernier soit non biaisé. Nous allons voir ici étapes de ce projet, à commencer par la mise à niveau comprenant du Multiple Importance Sampling, du Light Tracing et du Bidirectional Path Tracing.  
@@ -197,7 +197,7 @@
 	</div>
 
 	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">Bidirectional Path Tracing</a>
+		<figure class="finger bae-rock hella">Bidirectional Path Tracing</figure>
 	</nav>
 
 	Le BDPT est implémenté avec la <i>balance heuristic</i>. Cela permet de tracer certains chemins complexes tels que les caustiques ce qui est nécessaire dans certaines scènes. Ci-dessous successivement un Path tracing Naïf, un Light Tracing puis un Bidirectional Path Tracing rendu avec un nombre élevé de passes : 1024. Le BDPT  est en un sens la fusion du PT et du LT car il calcule toutes les possibilité d'échantillonnage d'un même chemin via ces deux techniques.
@@ -216,7 +216,7 @@
 	</div>
 
 	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
-		<a class="finger bae-rock hella">OptiMIS</a>
+		<figure class="finger bae-rock hella">OptiMIS</figure>
 	</nav>
 
 	La minimisation complète de la variance de l'estimateur de Monte Carlo ainsi que la libération de la contrainte sur les poids proposées par <a href="https://www.researchgate.net/profile/Pascal_Grittmann/publication/334433762_Optimal_multiple_importance_sampling/links/5d2c695da6fdcc2462e12f96/Optimal-multiple-importance-sampling.pdf" target="_blank">Kondapaneni et. al.</a> a permis une fois de plus de minimiser grandement la variance des images rendues. Cette méthode se base sur l'estimation d'un système linéaire au fur et à mesure des passes permettant de calculer les poids optimaux à appliquer.
