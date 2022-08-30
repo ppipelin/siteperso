@@ -3,7 +3,8 @@
 	color: PowderBlue;
 }
 
-:link:hover, :focus {
+:link:hover,
+:focus {
 	outline-color: Black;
 	outline-width: 0.25rem;
 	outline-style: solid;
