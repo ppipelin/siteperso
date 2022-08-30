@@ -11,7 +11,7 @@ var initPhotoSwipeFromDOM = function (gallerySelector) {
 			size,
 			item;
 
-		for (const i = 0; i < numNodes; i++) {
+		for (let i = 0; i < numNodes; i++) {
 
 			figureEl = thumbElements[i]; // <figure> element
 
