@@ -1,15 +1,15 @@
-var board = document.querySelector("chess-board");
-var file;
+let board = document.querySelector("chess-board");
+let file;
 
-var tree = {};
-var index = [];
-var path = [];
-var index_subpath = 0;
-var color = 1; // white first
-var chess_text = document.getElementById("chess_text")
-var counter = 1; // counts rounds for display
-var board_path;
-var board_color;
+let tree = {};
+let index = [];
+let path = [];
+let index_subpath = 0;
+let color = 1; // white first
+let chess_text = document.getElementById("chess_text")
+let counter = 1; // counts rounds for display
+let board_path;
+let board_color;
 
 function showPosition() {
 	console.log("Current position as an Object:");
@@ -46,12 +46,12 @@ function loadGame(path, color) {
 }
 
 function readTextFile(filename) {
-	var rawFile = new XMLHttpRequest();
+	const rawFile = new XMLHttpRequest();
 	rawFile.open("GET", filename, false);
 	rawFile.onreadystatechange = function () {
 		if (rawFile.readyState === 4) {
 			if (rawFile.status === 200 || rawFile.status == 0) {
-				var allText = rawFile.responseText;
+				const allText = rawFile.responseText;
 				file = allText;
 			}
 		}
@@ -60,46 +60,46 @@ function readTextFile(filename) {
 }
 
 function createTree() {
-	var splitted_line = file.split("\n");
-	var last_number_tabs = 0;
+	const splitted_line = file.split("\n");
+	const last_number_tabs = 0;
 	tree = { value: splitted_line[0].replace("\t", ""), child: [] };
 	index = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
 
 	for (const line in splitted_line) {
-		var line_content = splitted_line[line];
+		const line_content = splitted_line[line];
 
 		if (line == 0 || isNullOrWhitespaceOrTabs(line_content) || line_content.search("#") != -1 || line_content.search("<") != -1) continue;
 		line_content = line_content.replace(String.fromCharCode(13), "");
-		var number_tabs = numberOfTabs(line_content) - 1;
+		const number_tabs = numberOfTabs(line_content) - 1;
 		index[number_tabs]++;
 
 		// if going deeper
 		if (number_tabs > last_number_tabs) {
-			var current_node = tree;
-			for (var i = 0; i < number_tabs; ++i) {
+			const current_node = tree;
+			for (let i = 0; i < number_tabs; ++i) {
 				current_node = current_node.child[index[i]];
 			}
 			current_node.child.push({ value: line_content.replace(/\t/g, ""), child: [] });
 		}
 		// if same depth
 		else if (number_tabs == last_number_tabs) {
-			var current_node = tree;
-			for (var i = 0; i < number_tabs; ++i) {
+			const current_node = tree;
+			for (let i = 0; i < number_tabs; ++i) {
 				current_node = current_node.child[index[i]];
 			}
 			current_node.child.push({ value: line_content.replace(/\t/g, ""), child: [] });
 		}
 		// if going tabulations back (limited to difference of 10 tabulation)
 		else {
-			for (var k = 0; k < 10; ++k) {
+			for (let k = 0; k < 10; ++k) {
 				if (number_tabs == last_number_tabs - k) {
-					var current_node = tree;
-					for (var i = 0; i < number_tabs; ++i) {
+					const current_node = tree;
+					for (let i = 0; i < number_tabs; ++i) {
 						current_node = current_node.child[index[i]];
 					}
 					current_node.child.push({ value: line_content.replace(/\t/g, ""), child: [] });
-					for (var i = last_number_tabs; i > number_tabs; --i) {
+					for (let i = last_number_tabs; i > number_tabs; --i) {
 						index[i] = -1;
 					}
 				} /*else {
@@ -117,7 +117,7 @@ function displayTree() {
 }
 
 function displayTree_rec(tree, spaces) {
-	var text = "";
+	let text = "";
 	spaces += "	";
 	if (tree.child && tree.child.length) {
 		for (c in tree.child) {
@@ -129,8 +129,8 @@ function displayTree_rec(tree, spaces) {
 }
 
 function numberOfTabs(text) {
-	var count = 0;
-	var index = 0;
+	let count = 0;
+	let index = 0;
 	while (text.charAt(index++) === "\t") {
 		count++;
 	}
@@ -161,14 +161,14 @@ function selectChild(child_nb) {
 
 async function playAuto(delay = 1000) {
 	loadboard();
-	var tree_current = tree;
+	const tree_current = tree;
 	color = 1;
 	while (tree_current && tree_current.child) {
-		var child_nb = getRandomInt(0, tree_current.child.length - 1);
+		const child_nb = getRandomInt(0, tree_current.child.length - 1);
 		selectChild(child_nb);
-		var splitted_value = tree_current.value.split(/ /g);
-		for (var i in splitted_value) {
-			var move = await parseMoveDelayed(splitted_value[i], delay);
+		const splitted_value = tree_current.value.split(/ /g);
+		for (let i in splitted_value) {
+			const move = await parseMoveDelayed(splitted_value[i], delay);
 			// console.log(move);
 			if (move != "null move")
 				movePiece(move);
@@ -179,19 +179,19 @@ async function playAuto(delay = 1000) {
 
 // return the compbination of move that should be done to continue, null if no next move
 function whatNext() {
-	var tree_current = tree;
+	const tree_current = tree;
 
 	// Browse the tree based on path, computing current tree
 	for (i in path) {
 		tree_current = tree_current.child[path[i]];
 	}
 
-	var splitted_value = tree_current.value.split(/ /g);
+	const splitted_value = tree_current.value.split(/ /g);
 	if (index_subpath >= splitted_value.length) {
 		if (!tree_current.child.length) {
 			return null;
 		}
-		var child_nb = getRandomInt(0, tree_current.child.length - 1);
+		const child_nb = getRandomInt(0, tree_current.child.length - 1);
 		selectChild(child_nb);
 		index_subpath = 0;
 		tree_current = tree_current.child[child_nb];
@@ -204,12 +204,12 @@ function whatNext() {
 // if black move, play automatically white move.
 // ask whatNext() after a move to check if not finished.
 function playNext() {
-	var next_move = whatNext();
+	const next_move = whatNext();
 	if (!next_move) {
 		loadboard();
 		return;
 	}
-	var move = parseMove(next_move);
+	const move = parseMove(next_move);
 	if (move == "null move") {
 		console.log("null move");
 	} else {
@@ -238,7 +238,7 @@ function playNext() {
 board.addEventListener("drop", (e) => {
 	const { source, target, piece, newPosition, oldPosition, orientation } = e.detail;
 	// console.log("dropping " + piece + " : " + source + "-" + target)
-	var p;
+	let p;
 	switch (piece.charAt(1)) {
 		case "K": p = "r"; break;
 		case "Q": p = "d"; break;
@@ -248,12 +248,12 @@ board.addEventListener("drop", (e) => {
 		default: p = ""; break;
 	}
 
-	var combination = source + "-" + target;
-	var next_move = whatNext();
+	const combination = source + "-" + target;
+	const next_move = whatNext();
 	if (!next_move) {
 		loadboard();
 	}
-	var combination_tree = parseMove(next_move);
+	const combination_tree = parseMove(next_move);
 	const correct_move = combination == combination_tree;
 	const correct_move_castling = Array.isArray(combination_tree) && (combination == combination_tree[0] || combination == combination_tree[1]);
 	if (correct_move || correct_move_castling) {
@@ -298,7 +298,7 @@ board.addEventListener("drop", (e) => {
 
 function movePiece(move) {
 	if (Array.isArray(move)) {
-		for (var i in move) {
+		for (let i in move) {
 			if (isNullOrWhitespaceOrTabs(move[i])) {
 				++index_subpath;
 				playNext();
@@ -324,7 +324,7 @@ function parseMove(move) {
 	move = move.toLowerCase();
 	console.log(move);
 
-	var takes;
+	let takes;
 	if (move[0] == "x") {
 		takes = 1;
 		// console.log("Takes");
@@ -373,11 +373,11 @@ function parseMove(move) {
 	else if (move[0] == "0") {
 		if (move == "0-0") {
 			// console.log("kingside castling");
-			var line = color == 1 ? 1 : 8;
+			const line = color == 1 ? 1 : 8;
 			return ["e" + line + "-" + "g" + line, "h" + line + "-" + "f" + line];// king & rook
 		} else if (move == "0-0-0") {
 			// console.log("queenside castling");
-			var line = color == 1 ? 1 : 8;
+			const line = color == 1 ? 1 : 8;
 			return ["e" + line + "-" + "c" + line, "a" + line + "-" + "d" + line]; // king & rook
 		}
 	}
@@ -393,7 +393,7 @@ function parseMove(move) {
 }
 
 function parseMoveDelayed(move, delay) {
-	var promise = new Promise(function (resolve, reject) {
+	const promise = new Promise(function (resolve, reject) {
 		window.setTimeout(function () { resolve(parseMove(move)) }, delay);
 	});
 	return promise;
@@ -402,26 +402,26 @@ function parseMoveDelayed(move, delay) {
 }
 
 function moveKing(color, move, takes) {
-	var piece_name = (color == 1 ? "w" : "b") + "K";
-	var piece_pos = findPiece(piece_name)[0];
-	var combination = piece_pos + "-" + move;
+	const piece_name = (color == 1 ? "w" : "b") + "K";
+	const piece_pos = findPiece(piece_name)[0];
+	const combination = piece_pos + "-" + move;
 	// console.log(combination);
 	return combination;
 }
 
 function moveQueen(color, move, takes) {
-	var piece_name = (color == 1 ? "w" : "b") + "Q";
-	var piece_pos = findPiece(piece_name)[0];
-	var combination = piece_pos + "-" + move;
+	const piece_name = (color == 1 ? "w" : "b") + "Q";
+	const piece_pos = findPiece(piece_name)[0];
+	const combination = piece_pos + "-" + move;
 	// console.log(combination);
 	return combination;
 }
 
 function moveRook(color, move, takes) {
-	var piece_name = (color == 1 ? "w" : "b") + "R";
-	var piece_pos = findPiece(piece_name);
-	var combination;
-	for (var i in piece_pos) {
+	const piece_name = (color == 1 ? "w" : "b") + "R";
+	const piece_pos = findPiece(piece_name);
+	let combination;
+	for (let i in piece_pos) {
 		if (canRookMove(piece_pos[i], move)) {
 			if (move.length == 3)
 				move = move.slice(1);
@@ -434,13 +434,13 @@ function moveRook(color, move, takes) {
 }
 
 function canRookMove(piece_pos, move) {
-	var letter_piece = piece_pos.charAt(0);
-	var number_piece = parseInt(piece_pos[1]);
+	const letter_piece = piece_pos.charAt(0);
+	const number_piece = parseInt(piece_pos[1]);
 
-	var letter_move = move.charAt(0);
-	var number_move = parseInt(move[1]);
+	let letter_move = move.charAt(0);
+	let number_move = parseInt(move[1]);
 
-	var ambiguity = null; // if ambiguity, equals letter
+	let ambiguity = null; // if ambiguity, equals letter
 	if (move.length == 3) {
 		letter_move = move.charAt(1);
 		number_move = parseInt(move[2]);
@@ -451,20 +451,20 @@ function canRookMove(piece_pos, move) {
 	if (number_piece != number_move && letter_piece != letter_move) return 0;
 
 	// trace line
-	for (var i = previousChar(letter_piece); i > letter_move; i = previousChar(i)) {
+	for (let i = previousChar(letter_piece); i > letter_move; i = previousChar(i)) {
 		if (piece(i + number_piece)) return 0; // line left
 	}
 
-	for (var i = nextChar(letter_piece); number_piece == number_move && i < letter_move; i = nextChar(i)) {
+	for (let i = nextChar(letter_piece); number_piece == number_move && i < letter_move; i = nextChar(i)) {
 		if (piece(i + number_piece)) return 0; // line right
 	}
 
 	// trace column
-	for (var i = parseInt(number_piece) - 1; letter_piece == letter_move && i > number_move; --i) {
+	for (let i = parseInt(number_piece) - 1; letter_piece == letter_move && i > number_move; --i) {
 		if (piece(letter_piece + i)) return 0; // column down
 	}
 
-	for (var i = parseInt(number_piece) + 1; letter_piece == letter_move && i < number_move; ++i) {
+	for (let i = parseInt(number_piece) + 1; letter_piece == letter_move && i < number_move; ++i) {
 		if (piece(letter_piece + i)) return 0; // column up
 	}
 
@@ -473,10 +473,10 @@ function canRookMove(piece_pos, move) {
 
 function moveBishop(color, move, takes) {
 	// first Bishop found do the move, no ambiguity tolerated
-	var piece_name = (color == 1 ? "w" : "b") + "B";
-	var piece_pos = findPiece(piece_name);
-	var combination;
-	for (var i in piece_pos) {
+	const piece_name = (color == 1 ? "w" : "b") + "B";
+	const piece_pos = findPiece(piece_name);
+	let combination;
+	for (let i in piece_pos) {
 		if (canBishopMove(piece_pos[i], move)) {
 			combination = piece_pos[i] + "-" + move;
 		}
@@ -490,7 +490,7 @@ function canBishopMove(piece_pos, move) {
 	if (!diagonality(piece_pos, move)) return 0;
 
 	// upper diagonals
-	var i, j;
+	let i, j;
 	for (i = previousChar(piece_pos.charAt(0)), j = parseInt(piece_pos[1]) + 1; i > move.charAt(0) && j < move[1]; i = previousChar(i), ++j) { // letter + number
 		// console.log(i,j)
 		if (piece(i + j)) return 0; // upper diagonal left
@@ -516,7 +516,7 @@ function canBishopMove(piece_pos, move) {
 }
 
 function diagonality(piece_pos, move) {
-	var i, j;
+	let i, j;
 
 	for (i = piece_pos.charAt(0), j = parseInt(piece_pos[1]); insideBoard(i + j); i = previousChar(i), ++j) { // letter + number
 		if (i == move[0] && j == move[1]) return 1; // upper diagonal left
@@ -539,10 +539,10 @@ function diagonality(piece_pos, move) {
 }
 
 function moveKnight(color, move, takes) {
-	var piece_name = (color == 1 ? "w" : "b") + "N";
-	var piece_pos = findPiece(piece_name);
-	var combination;
-	for (var i in piece_pos) {
+	const piece_name = (color == 1 ? "w" : "b") + "N";
+	const piece_pos = findPiece(piece_name);
+	let combination;
+	for (let i in piece_pos) {
 		if (canKnightMove(piece_pos[i], move)) {
 			if (move.length == 3) move = move.slice(1);
 			combination = piece_pos[i] + "-" + move;
@@ -554,13 +554,13 @@ function moveKnight(color, move, takes) {
 }
 
 function canKnightMove(piece_pos, move) {
-	var letter_piece = piece_pos.charAt(0);
-	var number_piece = parseInt(piece_pos[1]);
+	const letter_piece = piece_pos.charAt(0);
+	const number_piece = parseInt(piece_pos[1]);
 
-	var letter_move = move.charAt(0);
-	var number_move = parseInt(move[1]);
+	let letter_move = move.charAt(0);
+	let number_move = parseInt(move[1]);
 
-	var ambiguity = null; // if ambiguity, equals letter
+	let ambiguity = null; // if ambiguity, equals letter
 	if (move.length == 3) { // ge7
 		letter_move = move.charAt(1);
 		number_move = parseInt(move[2]);
@@ -584,21 +584,21 @@ function canKnightMove(piece_pos, move) {
 
 function movePawn(color, move, takes) {
 	// TODO prise en passant
-	var combination;
+	let combination;
 	if (takes) {
 		if (move.length == 2) {
-			var column;
+			let column;
 
 			// xbc5 written xc5
 			column = color > 0 ? previousChar(move[0]) : nextChar(move[0]);
-			var left_case = column + (parseInt(move[1]) - color); // = "b4"
+			const left_case = column + (parseInt(move[1]) - color); // = "b4"
 
 			// xdc5
 			column = color > 0 ? nextChar(move[0]) : previousChar(move[0]);
-			var right_case = column + (parseInt(move[1]) - color); // = "d4"
+			const right_case = column + (parseInt(move[1]) - color); // = "d4"
 
-			var left = piece(left_case) && piece(left_case)[0] == ((color == 1) ? "w" : "b") && piece(left_case)[1] == "P";
-			var right = piece(right_case) && piece(right_case)[0] == ((color == 1) ? "w" : "b") && piece(right_case)[1] == "P";
+			const left = piece(left_case) && piece(left_case)[0] == ((color == 1) ? "w" : "b") && piece(left_case)[1] == "P";
+			const right = piece(right_case) && piece(right_case)[0] == ((color == 1) ? "w" : "b") && piece(right_case)[1] == "P";
 			combination = (left ? left_case : right_case) + "-" + move[0] + move[1] // d4-c5
 		} else {
 			// xdc5 from d4 to c5 with ambiguity on which pawn
@@ -659,7 +659,7 @@ textarea.addEventListener("keyup", () => {
 	elem.addEventListener("keydown", function (e) {
 		if (e.which === 9) {
 			e.preventDefault();
-			var curPos = textarea.selectionStart;
+			const curPos = textarea.selectionStart;
 			let x = $("#tree_text").val();
 			let text_to_insert = "\t";
 			$("#tree_text").val(x.slice(0, curPos) + text_to_insert + x.slice(curPos));
