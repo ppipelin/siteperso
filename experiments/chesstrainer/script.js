@@ -61,13 +61,13 @@ function readTextFile(filename) {
 
 function createTree() {
 	const splitted_line = file.split("\n");
-	const last_number_tabs = 0;
+	let last_number_tabs = 0;
 	tree = { value: splitted_line[0].replace("\t", ""), child: [] };
 	index = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1];
 
 
 	for (const line in splitted_line) {
-		const line_content = splitted_line[line];
+		let line_content = splitted_line[line];
 
 		if (line == 0 || isNullOrWhitespaceOrTabs(line_content) || line_content.search("#") != -1 || line_content.search("<") != -1) continue;
 		line_content = line_content.replace(String.fromCharCode(13), "");
@@ -76,7 +76,7 @@ function createTree() {
 
 		// if going deeper
 		if (number_tabs > last_number_tabs) {
-			const current_node = tree;
+			let current_node = tree;
 			for (let i = 0; i < number_tabs; ++i) {
 				current_node = current_node.child[index[i]];
 			}
@@ -84,7 +84,7 @@ function createTree() {
 		}
 		// if same depth
 		else if (number_tabs == last_number_tabs) {
-			const current_node = tree;
+			let current_node = tree;
 			for (let i = 0; i < number_tabs; ++i) {
 				current_node = current_node.child[index[i]];
 			}
@@ -94,7 +94,7 @@ function createTree() {
 		else {
 			for (let k = 0; k < 10; ++k) {
 				if (number_tabs == last_number_tabs - k) {
-					const current_node = tree;
+					let current_node = tree;
 					for (let i = 0; i < number_tabs; ++i) {
 						current_node = current_node.child[index[i]];
 					}
@@ -179,14 +179,14 @@ async function playAuto(delay = 1000) {
 
 // return the compbination of move that should be done to continue, null if no next move
 function whatNext() {
-	const tree_current = tree;
+	let tree_current = tree;
 
 	// Browse the tree based on path, computing current tree
 	for (i in path) {
 		tree_current = tree_current.child[path[i]];
 	}
 
-	const splitted_value = tree_current.value.split(/ /g);
+	let splitted_value = tree_current.value.split(/ /g);
 	if (index_subpath >= splitted_value.length) {
 		if (!tree_current.child.length) {
 			return null;
