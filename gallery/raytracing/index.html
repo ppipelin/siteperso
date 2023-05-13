@@ -1,20 +1,15 @@
 <!doctype html>
-<html lang="en"  style="background: #fafdfe">
-<head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91929483-3"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
+<html lang="en" style="background: #fafdfe">
 
-		gtag('config', 'UA-91929483-3');
-	</script>
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-E58GKHEECC"></script>
+	<script>  window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-E58GKHEECC');</script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script> 
-		$(function(){
-			$("#header").load("header.html"); 
-			$("#footer").load("footer.html"); 
+	<script>
+		$(function () {
+			$("#header").load("header.html");
+			$("#footer").load("footer.html");
 		});
 	</script>
 	<meta charset="utf-8">
@@ -36,10 +31,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/blazy/1.8.2/blazy.min.js"></script>
 	<script>
 		var blazy = new Blazy({
-		container: '#container' // Default is window
+			container: '#container' // Default is window
 		});
 	</script>
 </head>
+
 <body>
 	<a class="finger hella bae-rock +" href="en/gallery/raytracing">
 		english
@@ -88,7 +84,7 @@
 		</div>
 	</div>
 
-	A more complicated scene with emissive lightning, specular surfaces and textures. Naturally, we added acceleration structures to speed up the rendering, a 
+	A more complicated scene with emissive lightning, specular surfaces and textures. Naturally, we added acceleration structures to speed up the rendering, a
 	<span class="tooltipcustom">BVH
 		<span class="tooltiptext">Bounding Volume Hierarchy</span>
 	</span> coupled with an
@@ -112,7 +108,7 @@
 		<figure class="finger bae-rock hella">Path Tracing</figure>
 	</nav>
 
-	We then added indirect lightning, light surface, stratification of lights and pixels (to  reduce variance between samples) and refraction. We also defined few more primitives such as spheres, annulus and cylinders to get perfect shapes. This engine embed a real-time visualizer thanks to upscaling, providing a more fluid camera. Hence, many features are toggled by keyboard.
+	We then added indirect lightning, light surface, stratification of lights and pixels (to reduce variance between samples) and refraction. We also defined few more primitives such as spheres, annulus and cylinders to get perfect shapes. This engine embed a real-time visualizer thanks to upscaling, providing a more fluid camera. Hence, many features are toggled by keyboard.
 
 	<div class="row forehead undertow">
 		<div class="col-sm-auto">
@@ -144,7 +140,7 @@
 		<figure class="finger bae-rock hella" name="industrial">Industrial Project</figure>
 	</nav>
 
-	Last year at ESIR embedded an industrial project proposed by an enterprise. The latter where I participated was proposed by Chaos Czech which develop the <a href="https://corona-renderer.com/">Corona Renderer</a>. This project driven by four persons consists in implementing Optimal Multiple Importance Sampling in a bidirectional path tracer. It is also totally necessary to be unbiased. Here are presented the steps of the project, beginning with a small skill upgrading embedding Multiple Importance Sampling, Light Tracing and Bidirectional Path Tracing.  
+	Last year at ESIR embedded an industrial project proposed by an enterprise. The latter where I participated was proposed by Chaos Czech which develop the <a href="https://corona-renderer.com/">Corona Renderer</a>. This project driven by four persons consists in implementing Optimal Multiple Importance Sampling in a bidirectional path tracer. It is also totally necessary to be unbiased. Here are presented the steps of the project, beginning with a small skill upgrading embedding Multiple Importance Sampling, Light Tracing and Bidirectional Path Tracing.
 
 	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
 		<a class="finger bae-rock hella" href="https://sites.fas.harvard.edu/~cs278/papers/veach.pdf" target="_blank">Multiple Importance Sampling</a>
@@ -179,7 +175,7 @@
 	</div>
 
 	Here are the effects of the weights of each sampling method and the final result with 2048 passes (500s).
-	
+
 	<div class="row forehead undertow">
 		<div class="col-sm-auto">
 			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/2048/2048BSW.png" title="Path tracing rendered image of Veach scene with weights on BSDF sampling" alt="Path Tracing Multiple Importance Sampling MIS BSDF">
@@ -198,7 +194,7 @@
 
 	The BDPT is implemented with the <i>balance heuristic</i>. It allows complex paths like caustics to be traced which is necessary in some scenes. Here are successively Naive Path Tracing, Light Tracing and Bidirectional Path Tracing rendered with a high number of passes : 1024. The BDPT is the fusion of PT an LT in a sense that it computes all the possibilities of sampling a single path with these two techniques.
 	A path of 7 vertices can be sampled using 7 combinations, starting from [<i>s=0;t=7</i>] to [<i>s=6;t=1</i>] where <i>s</i> is the number of light vertices and <i>t</i> is the number of camera vertices (<i>radiance and importance</i>). The pdf of the current path with the current sampling is computed by studying all the other ways to sample this path by using forward and reverse pdf.
-	
+
 	<div class="row forehead undertow">
 		<div class="col-sm-auto">
 			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/NaivePathTracing1024.png" title="Naive Path tracing rendered image of Cornel box with a caustic" alt="Naive Path Tracing Caustic">
@@ -252,4 +248,5 @@
 
 	<div id="footer" class="forehead +++"></div>
 </body>
+
 </html>

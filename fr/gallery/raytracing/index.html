@@ -1,20 +1,15 @@
 <!doctype html>
-<html lang="fr"  style="background: #fafdfe">
-<head>
-	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-91929483-3"></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
+<html lang="fr" style="background: #fafdfe">
 
-		gtag('config', 'UA-91929483-3');
-	</script>
+<head>
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-E58GKHEECC"></script>
+	<script>  window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-E58GKHEECC');</script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script> 
-		$(function(){
-			$("#header").load("header.html"); 
-			$("#footer").load("footer.html"); 
+	<script>
+		$(function () {
+			$("#header").load("header.html");
+			$("#footer").load("footer.html");
 		});
 	</script>
 	<meta charset="utf-8">
@@ -36,10 +31,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/blazy/1.8.2/blazy.min.js"></script>
 	<script>
 		var blazy = new Blazy({
-		container: '#container' // Default is window
-	});
-</script>
+			container: '#container' // Default is window
+		});
+	</script>
 </head>
+
 <body>
 	<a class="finger hella bae-rock +" href="en/gallery/raytracing">
 		english
@@ -75,7 +71,7 @@
 	</nav>
 
 	Ci-dessous, trois images d'une même scène 3D. La première uniquement composée des couleurs, la seconde utilisant le shader de Phong et la dernière simulant des ombres douces à l'aide d'une lumière ambiante.
-	
+
 	<div class="row forehead undertow">
 		<div class="col-sm-auto">
 			<img class="finger thumb" src="assets/raytracing/CornelEmpty.png" title="Ray tracing rendered image of Cornel Box" alt="Ray Tracing Cornel Box">
@@ -88,7 +84,7 @@
 		</div>
 	</div>
 
-	Les images qui suivent sont maintenant composées de lumières émissives, de surface spéculaire ainsi que de textures. Naturellement, nous avons ajouté des structures accélératrices pour accélérer le rendu, un 
+	Les images qui suivent sont maintenant composées de lumières émissives, de surface spéculaire ainsi que de textures. Naturellement, nous avons ajouté des structures accélératrices pour accélérer le rendu, un
 	<span class="tooltipcustom">BVH
 		<span class="tooltiptext">Bounding Volume Hierarchy</span>
 	</span> couplé d'un
@@ -148,14 +144,14 @@
 		<figure class="finger bae-rock hella" name="industrial">Projet Industriel</figure>
 	</nav>
 
-	La dernière année à l'ESIR comprend la réalisation d'un projet industriel proposé par une entreprise. Le projet industriel auquel j'ai participé a été proposé par Chaos Czech l'entreprise développant le <a href="https://corona-renderer.com/">Corona Renderer</a>. Ce projet regroupe quatre personnes et consiste en l'implémentation d'un Échantillonnage à Multiple Importances Optimal dans un path tracer bidirectionnel. Il est notamment essentiel que ce dernier soit non biaisé. Nous allons voir ici étapes de ce projet, à commencer par la mise à niveau comprenant du Multiple Importance Sampling, du Light Tracing et du Bidirectional Path Tracing.  
+	La dernière année à l'ESIR comprend la réalisation d'un projet industriel proposé par une entreprise. Le projet industriel auquel j'ai participé a été proposé par Chaos Czech l'entreprise développant le <a href="https://corona-renderer.com/">Corona Renderer</a>. Ce projet regroupe quatre personnes et consiste en l'implémentation d'un Échantillonnage à Multiple Importances Optimal dans un path tracer bidirectionnel. Il est notamment essentiel que ce dernier soit non biaisé. Nous allons voir ici étapes de ce projet, à commencer par la mise à niveau comprenant du Multiple Importance Sampling, du Light Tracing et du Bidirectional Path Tracing.
 
 	<nav class="tight undertow forehead ++" aria-label="plunge" id="plunge">
 		<a class="finger bae-rock hella" href="https://sites.fas.harvard.edu/~cs278/papers/veach.pdf" target="_blank">Multiple Importance Sampling</a>
 	</nav>
 
 	Le MIS implémenté comporte deux méthodes d'échantillonnage, celle des BSDFs et celle des lumières que nous pouvons voir avec 64 passes ci dessous, respectivement. La scène utilisée reprend celle proposée par Veach et Guibas, quatre sphères de couleurs, quatre surfaces aux BSDFs de plus en plus diffuses. La dernière des images correspond aux poids de chaque échantillonnages sélectionnés par la <i>balance heuristic</i>.
-	
+
 	<div class="row forehead undertow">
 		<div class="col-sm-auto">
 			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/64/64BS.png" title="Path tracing rendered image of Veach scene with BSDF sampling" alt="Path Tracing Veach BSDF Sampling">
@@ -183,7 +179,7 @@
 	</div>
 
 	Nous pouvons maintenant voir l'effet des poids sur chaque méthode d'échantillonnage ainsi que le résultat final en 2048 passes (500s).
-	
+
 	<div class="row forehead undertow">
 		<div class="col-sm-auto">
 			<img class="finger thumb b-lazy" src="assets/loading.svg" data-src="assets/raytracing/veach/2048/2048BSW.png" title="Path tracing rendered image of Veach scene with weights on BSDF sampling" alt="Path Tracing Multiple Importance Sampling MIS BSDF">
@@ -200,7 +196,7 @@
 		<figure class="finger bae-rock hella">Bidirectional Path Tracing</figure>
 	</nav>
 
-	Le BDPT est implémenté avec la <i>balance heuristic</i>. Cela permet de tracer certains chemins complexes tels que les caustiques ce qui est nécessaire dans certaines scènes. Ci-dessous successivement un Path tracing Naïf, un Light Tracing puis un Bidirectional Path Tracing rendu avec un nombre élevé de passes : 1024. Le BDPT  est en un sens la fusion du PT et du LT car il calcule toutes les possibilité d'échantillonnage d'un même chemin via ces deux techniques.
+	Le BDPT est implémenté avec la <i>balance heuristic</i>. Cela permet de tracer certains chemins complexes tels que les caustiques ce qui est nécessaire dans certaines scènes. Ci-dessous successivement un Path tracing Naïf, un Light Tracing puis un Bidirectional Path Tracing rendu avec un nombre élevé de passes : 1024. Le BDPT est en un sens la fusion du PT et du LT car il calcule toutes les possibilité d'échantillonnage d'un même chemin via ces deux techniques.
 	Un chemin de 7 vertex peu être échantillonné selon 7 combinaisons, commençant à [<i>s=0;t=7</i>] jusque [<i>s=6;t=1</i>] où <i>s</i> est le nombre de vertex partant de la lumière et <i>t</i> est le nombre de vertex partant de la caméra (<i>radiance and importance</i>). La pdf du chemin courant avec l'échantillonnage courant se calcule en utilisant les pdf forward et reverse.
 
 	<div class="row forehead undertow">
@@ -256,4 +252,5 @@
 
 	<div id="footer" class="forehead +++"></div>
 </body>
+
 </html>

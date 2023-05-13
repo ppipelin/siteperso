@@ -9,27 +9,37 @@ let message;
 let shaderProgram;
 let angleX = 0;
 let angleY = 0;
-let keyboard = [0, 0, 0];
+let u_keyboard = [0, 0, 0];
 
 //Texture
 let textures;
+let objattrtex;
 
 //Vertex Shader
 let VertexLocation;
 
 //Fragment Shader
+let u_numsLocation;
 let u_timeLocation;
 let u_itrLocation;
 let u_render_modeLocation;
 let u_random_modeLocation;
 let u_sceneLocation;
 let u_textureLocation;
+let u_attrtextureLocation;
 let u_texsizeLocation;
+let u_attrtexsizeLocation;
 let u_texLocations = [];
 let u_mouseLocation;
 let u_keyboardLocation;
 
-//render shader
+// Added for attrtexture
+// Width and height must be pow(2,n)
+let attw = 1024; // width
+let atth = 2; // height
+var attributes = new Uint8Array(attw * atth * 4);
+
+// Render shader
 let renderProgram;
 let renderVertexAttribute;
 let vertexPositionBuffer;
@@ -41,6 +51,9 @@ let u_iterations = 0;
 let u_render_mode = 4;
 let u_random_mode = 0;
 let u_scene = 0;
+
+let Datas = [];
+let DefaultDatas = [];
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -56,6 +69,8 @@ function runGL() {
 
 	end = Date.now();
 	document.getElementById("time").innerHTML += "Initialize Shader: " + (end - begin).toString() + " ms<br/>";
+
+	initDefaultScene();
 
 	animate();
 
@@ -108,12 +123,18 @@ function initBuffers() {
 		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, canvas.width, canvas.height, 0, gl.RGB, type, null);
 	}
 	gl.bindTexture(gl.TEXTURE_2D, null);
+
+	objattrtex = gl.createTexture();
+	gl.bindTexture(gl.TEXTURE_2D, objattrtex);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.bindTexture(gl.TEXTURE_2D, null);
 }
 
 function initializeShader() {
-	//create render shader
-	const renderVs = getShaderSource(document.getElementById("vs_render"));
-	const renderFs = getShaderSource(document.getElementById("fs_render"));
+	// Create render shader
+	const renderVs = window.shaders.vs_render;
+	const renderFs = window.shaders.fs_render;
 
 	renderProgram = createProgram(gl, renderVs, renderFs, message);
 	renderVertexAttribute = gl.getAttribLocation(renderProgram, 'i_vertex');
@@ -122,8 +143,8 @@ function initializeShader() {
 	u_textureLocationc = gl.getUniformLocation(renderProgram, "u_texture");
 
 	// Create path tracer shader
-	const vs = getShaderSource(document.getElementById("vs_pathTracer"));
-	const fs = getShaderSource(document.getElementById("fs_pathTracer"));
+	const vs = window.shaders.vs_pathTracer;
+	const fs = window.shaders.fs_pathTracer;
 
 	shaderProgram = createProgram(gl, vs, fs, message);
 
@@ -131,19 +152,22 @@ function initializeShader() {
 	VertexLocation = gl.getAttribLocation(shaderProgram, "i_vertex");
 	gl.enableVertexAttribArray(VertexLocation);
 
-	// Fragment Shader        
+	// Fragment Shader
 	u_timeLocation = gl.getUniformLocation(shaderProgram, "u_time");
 	u_itrLocation = gl.getUniformLocation(shaderProgram, "u_iterations");
+	u_numsLocation = gl.getUniformLocation(shaderProgram, "u_objnums");
 	u_render_modeLocation = gl.getUniformLocation(shaderProgram, "u_render_mode");
 	u_random_modeLocation = gl.getUniformLocation(shaderProgram, "u_random_mode");
 	u_sceneLocation = gl.getUniformLocation(shaderProgram, "u_scene");
 
 	u_textureLocation = gl.getUniformLocation(shaderProgram, "u_texture");
+	u_attrtextureLocation = gl.getUniformLocation(shaderProgram, "u_attrtexture");
 	u_texsizeLocation = gl.getUniformLocation(shaderProgram, "u_texsize");
+	u_attrtexsizeLocation = gl.getUniformLocation(shaderProgram, "u_attrtexsize");
 
 	// Move
-	u_mouseLocation = gl.getUniformLocation(shaderProgram, "mouse");
-	u_keyboardLocation = gl.getUniformLocation(shaderProgram, "keyboard");
+	u_mouseLocation = gl.getUniformLocation(shaderProgram, "u_mouse");
+	u_keyboardLocation = gl.getUniformLocation(shaderProgram, "u_keyboard");
 }
 
 function animate() {
@@ -159,20 +183,27 @@ function animate() {
 
 		gl.uniform1f(u_timeLocation, u_time);
 		gl.uniform1i(u_itrLocation, u_iterations);
+		gl.uniform1i(u_numsLocation, Datas.length);
 		gl.uniform1i(u_render_modeLocation, u_render_mode);
 		gl.uniform1i(u_random_modeLocation, u_random_mode);
 		gl.uniform1i(u_sceneLocation, u_scene);
 
-		//Added for texture size
+		// Added for texture size
 		gl.uniform2f(u_texsizeLocation, canvas.width, canvas.height);
+		gl.uniform2f(u_attrtexsizeLocation, attw, atth);
 
 		gl.activeTexture(gl.TEXTURE0);
 		gl.bindTexture(gl.TEXTURE_2D, textures[0]);
 		gl.uniform1i(u_textureLocation, 0);
 
-		// Move 
+		gl.activeTexture(gl.TEXTURE1); // Attributes for objects
+		gl.bindTexture(gl.TEXTURE_2D, objattrtex);
+		gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, attw, atth, 0, gl.RGB, gl.UNSIGNED_BYTE, attributes);
+		gl.uniform1i(u_attrtextureLocation, 1);
+
+		// Move
 		gl.uniform2f(u_mouseLocation, angleX, angleY);
-		gl.uniform3f(u_keyboardLocation, keyboard[0], keyboard[1], keyboard[2]);
+		gl.uniform3f(u_keyboardLocation, u_keyboard[0], u_keyboard[1], u_keyboard[2]);
 
 		gl.bindBuffer(gl.ARRAY_BUFFER, vertexPositionBuffer);
 		gl.bindFramebuffer(gl.FRAMEBUFFER, frameBuffer);
@@ -199,7 +230,277 @@ function animate() {
 	window.requestAnimFrame(animate);
 }
 
-function resize() {
+function AddObjsAttr(i) {
+	gl.useProgram(shaderProgram);
+	// objtype:[0.0,1.0] to [0,255]
+	attributes[21 * i + 0] = 255.0 * Datas[i].obj_type;
+	// texturetype:[0.0,5.0] to [0,255]
+	attributes[21 * i + 1] = 255.0 * Datas[i].obj_textureType / 5.0;
+	// bsdf_number: [0.0, 3.0] to[0, 255]
+	attributes[21 * i + 2] = 255.0 * Datas[i].obj_bsdf_number / 3.0;
+	// vertices:[-100.0,100.0] to [0,255] times 3
+	const mind = -100.0;
+	const maxd = 100.0;
+	attributes[21 * i + 3] = 255.0 * (Datas[i].obj_v1[0] - mind) / (maxd - mind);
+	attributes[21 * i + 4] = 255.0 * (Datas[i].obj_v1[1] - mind) / (maxd - mind);
+	attributes[21 * i + 5] = 255.0 * (Datas[i].obj_v1[2] - mind) / (maxd - mind);
+	attributes[21 * i + 6] = 255.0 * (Datas[i].obj_v2[0] - mind) / (maxd - mind);
+	attributes[21 * i + 7] = 255.0 * (Datas[i].obj_v2[1] - mind) / (maxd - mind);
+	attributes[21 * i + 8] = 255.0 * (Datas[i].obj_v2[2] - mind) / (maxd - mind);
+	attributes[21 * i + 9] = 255.0 * (Datas[i].obj_v3[0] - mind) / (maxd - mind);
+	attributes[21 * i + 10] = 255.0 * (Datas[i].obj_v3[1] - mind) / (maxd - mind);
+	attributes[21 * i + 11] = 255.0 * (Datas[i].obj_v3[2] - mind) / (maxd - mind);
+
+	// Albedo
+	attributes[21 * i + 12] = 255.0 * Datas[i].obj_albedo[0];
+	attributes[21 * i + 13] = 255.0 * Datas[i].obj_albedo[1];
+	attributes[21 * i + 14] = 255.0 * Datas[i].obj_albedo[2];
+
+	// Emissive
+	attributes[21 * i + 15] = 255.0 * Datas[i].obj_emissive[0] / 10.0;
+	attributes[21 * i + 16] = 255.0 * Datas[i].obj_emissive[1] / 10.0;
+	attributes[21 * i + 17] = 255.0 * Datas[i].obj_emissive[2] / 10.0;
+
+	// Eta and Shininess
+	attributes[21 * i + 18] = 255.0 * Datas[i].obj_eta / 10.0;
+	attributes[21 * i + 19] = 255.0 * Datas[i].obj_shininess;
+	attributes[21 * i + 20] = 255.0;
+}
+
+function addSphere() {
+	if (Datas.length == 31)
+		return;
+	Datas.push({
+		obj_type: 0,
+		obj_textureType: 0,
+		obj_v1: [Math.random() * 100.0 - 50.0, Math.random() * 100.0 - 50.0, Math.random() * 100.0 - 50.0],
+		obj_v2: [0.0, 0.0, 0.0],
+		obj_v3: [0.0, 0.0, 0.0],
+		obj_bsdf_number: Math.random() * 3.0,
+		obj_albedo: [Math.random(), Math.random(), Math.random()],
+		obj_emissive: [Math.random(), Math.random(), Math.random()],
+		obj_eta: Math.random() * 10.0,
+		obj_shininess: Math.random(),
+	});
+
+	AddObjsAttr(Datas.length - 1);
+
+	u_iterations = 0;
+}
+
+function addTriangle() {
+	if (Datas.length == 31)
+		return;
+	Datas.push({
+		obj_type: 1,
+		obj_textureType: 0,
+		obj_v1: [Math.random() * 200.0 - 50.0, Math.random() * 200.0 - 50.0, Math.random() * 200.0 - 50.0],
+		obj_v2: [Math.random() * 200.0 - 50.0, Math.random() * 200.0 - 50.0, Math.random() * 200.0 - 50.0],
+		obj_v3: [Math.random() * 200.0 - 50.0, Math.random() * 200.0 - 50.0, Math.random() * 200.0 - 50.0],
+		obj_bsdf_number: Math.random() * 3.0,
+		obj_albedo: [Math.random(), Math.random(), Math.random()],
+		obj_emissive: [Math.random(), Math.random(), Math.random()],
+		obj_eta: Math.random() * 10.0,
+		obj_shininess: Math.random(),
+	});
+
+	AddObjsAttr(Datas.length - 1);
+
+	u_iterations = 0;
+}
+
+function rotationMatrix(axis, angle) {
+	const ratio = Math.sqrt(axis[0] ** 2 + axis[1] ** 2 + axis[2] ** 2);
+	axis[0] = axis[0] / ratio;
+	axis[1] = axis[1] / ratio;
+	axis[2] = axis[2] / ratio;
+	s = Math.sin(angle / 180 * Math.PI);
+	c = Math.cos(angle / 180 * Math.PI);
+	oc = 1.0 - c;
+	return glMatrix.mat3.fromValues(oc * axis[0] * axis[0] + c, oc * axis[0] * axis[1] - axis[2] * s, oc * axis[2] * axis[0] + axis[1] * s,
+		oc * axis[0] * axis[1] + axis[2] * s, oc * axis[1] * axis[1] + c, oc * axis[1] * axis[2] - axis[0] * s,
+		oc * axis[2] * axis[0] - axis[1] * s, oc * axis[1] * axis[2] + axis[0] * s, oc * axis[2] * axis[2] + c);
+}
+
+function addQuad(datas, position, scale = glMatrix.vec2.fromValues(1, 1), axis = glMatrix.vec3.fromValues(0, 0, 1), angle = 0, obj_bsdf_number = 0, obj_albedo = glMatrix.vec3.fromValues(1, 1, 1), obj_emissive = glMatrix.vec3.fromValues(0, 0, 0), obj_eta = 1.5, obj_shininess = 0) {
+	if (datas.length == 31)
+		return;
+
+	R = rotationMatrix(axis, angle);
+
+	fl = glMatrix.vec3.create();
+	glMatrix.vec3.transformMat3(fl, glMatrix.vec3.fromValues(-0.5 * scale[0], -0.5 * scale[1], 0), R);
+	glMatrix.vec3.add(fl, fl, position);
+	fr = glMatrix.vec3.create();
+	glMatrix.vec3.transformMat3(fr, glMatrix.vec3.fromValues(-0.5 * scale[0], 0.5 * scale[1], 0), R);
+	glMatrix.vec3.add(fr, fr, position);
+	bl = glMatrix.vec3.create();
+	glMatrix.vec3.transformMat3(bl, glMatrix.vec3.fromValues(0.5 * scale[0], -0.5 * scale[1], 0), R);
+	glMatrix.vec3.add(bl, bl, position);
+	br = glMatrix.vec3.create();
+	glMatrix.vec3.transformMat3(br, glMatrix.vec3.fromValues(0.5 * scale[0], 0.5 * scale[1], 0), R);
+	glMatrix.vec3.add(br, br, position);
+	datas.push({
+		obj_type: 1,
+		obj_textureType: 0,
+		obj_v1: fl,
+		obj_v2: fr,
+		obj_v3: br,
+		obj_bsdf_number: obj_bsdf_number,
+		obj_albedo: obj_albedo,
+		obj_emissive: obj_emissive,
+		obj_eta: obj_eta,
+		obj_shininess: obj_shininess
+	});
+
+	datas.push({
+		obj_type: 1,
+		obj_textureType: 0,
+		obj_v1: br,
+		obj_v2: bl,
+		obj_v3: fl,
+		obj_bsdf_number: obj_bsdf_number,
+		obj_albedo: obj_albedo,
+		obj_emissive: obj_emissive,
+		obj_eta: obj_eta,
+		obj_shininess: obj_shininess
+	});
+
+	// AddObjsAttr(datas.length - 1);
+
+	u_iterations = 0;
+}
+
+function initDefaultScene() {
+	// Light
+	DefaultDatas.push({
+		obj_type: 0,
+		obj_textureType: 0,
+		obj_v1: [0, 0, 4],
+		obj_v2: [3, 0, 0],
+		obj_v3: [0, 0, 0],
+		obj_bsdf_number: 0,
+		obj_albedo: [0, 0, 0],
+		obj_emissive: [1, 1, 1],
+		obj_eta: 0.0,
+		obj_shininess: 0,
+	});
+
+	DefaultDatas.push({
+		obj_type: 0,
+		obj_textureType: 0,
+		obj_v1: [5, 5, 4],
+		obj_v2: [2, 0, 0],
+		obj_v3: [0, 0, 0],
+		obj_bsdf_number: 0,
+		obj_albedo: [0, 0, 0],
+		obj_emissive: [0.5, 1, 1],
+		obj_eta: 0.0,
+		obj_shininess: 0,
+	});
+
+
+	DefaultDatas.push({
+		obj_type: 0,
+		obj_textureType: 0,
+		obj_v1: [0, 0, 0],
+		obj_v2: [1, 0, 0],
+		obj_v3: [0, 0, 0],
+		obj_bsdf_number: 0,
+		obj_albedo: [1, 1, 1],
+		obj_emissive: [0, 0, 0],
+		obj_eta: 1.0,
+		obj_shininess: 0,
+	});
+
+	// Cornell
+
+	const size = 10;
+	const height = 5;
+
+	addQuad(
+		/* datas */ DefaultDatas,
+		/* position */ glMatrix.vec3.fromValues(0, 0, -height),
+		/* scale */ glMatrix.vec2.fromValues(size, size),
+		/* axis */ glMatrix.vec3.fromValues(0, 0, 1),
+		/* angle */ 0,
+		/* obj_bsdf_number */ 0,
+		/* obj_albedo */ glMatrix.vec3.fromValues(1, 1, 1),
+		/* obj_emissive */ glMatrix.vec3.fromValues(0, 0, 0),
+		/* obj_eta */ 1.0,
+		/* obj_shininess */ 0
+	);
+	addQuad(
+		/* datas */ DefaultDatas,
+		/* position */ glMatrix.vec3.fromValues(0, 0, height),
+		/* scale */ glMatrix.vec2.fromValues(size, size),
+		/* axis */ glMatrix.vec3.fromValues(0, 0, 1),
+		/* angle */ 0,
+		/* obj_bsdf_number */ 0,
+		/* obj_albedo */ glMatrix.vec3.fromValues(1, 1, 1),
+		/* obj_emissive */ glMatrix.vec3.fromValues(0, 0, 0),
+		/* obj_eta */ 1.0,
+		/* obj_shininess */ 0
+	);
+	addQuad(
+		/* datas */ DefaultDatas,
+		/* position */ glMatrix.vec3.fromValues(0, -size / 2, 0),
+		/* scale */ glMatrix.vec2.fromValues(size, size),
+		/* axis */ glMatrix.vec3.fromValues(1, 0, 0),
+		/* angle */ 90,
+		/* obj_bsdf_number */ 0,
+		/* obj_albedo */ glMatrix.vec3.fromValues(1, 1, 1),
+		/* obj_emissive */ glMatrix.vec3.fromValues(0, 0, 0),
+		/* obj_eta */ 1.0,
+		/* obj_shininess */ 0
+	);
+	addQuad(
+		/* datas */ DefaultDatas,
+		/* position */ glMatrix.vec3.fromValues(0, size / 2, 0),
+		/* scale */ glMatrix.vec2.fromValues(size, size),
+		/* axis */ glMatrix.vec3.fromValues(1, 0, 0),
+		/* angle */ 90,
+		/* obj_bsdf_number */ 0,
+		/* obj_albedo */ glMatrix.vec3.fromValues(1, 1, 1),
+		/* obj_emissive */ glMatrix.vec3.fromValues(0, 0, 0),
+		/* obj_eta */ 1.0,
+		/* obj_shininess */ 0
+	);
+	addQuad(
+		/* datas */ DefaultDatas,
+		/* position */ glMatrix.vec3.fromValues(size / 2, 0, 0),
+		/* scale */ glMatrix.vec2.fromValues(size, size),
+		/* axis */ glMatrix.vec3.fromValues(0, 1, 0),
+		/* angle */ 90,
+		/* obj_bsdf_number */ 0,
+		/* obj_albedo */ glMatrix.vec3.fromValues(1, 1, 1),
+		/* obj_emissive */ glMatrix.vec3.fromValues(0, 0, 0),
+		/* obj_eta */ 1.0,
+		/* obj_shininess */ 0
+	);
+
+	defaultScene();
+}
+
+function defaultScene() {
+	Datas.length = 0;
+
+	for (var i = 0; i < DefaultDatas.length; i++) {
+		Datas[i] = DefaultDatas[i];
+		AddObjsAttr(i);
+	}
+
+	u_iterations = 0;
+
+
+	// var node = document.getElementById("gui2");
+	// if (node != null)
+	// 	node.parentNode.removeChild(node);
+
+	// GUIDefaultScene();
+}
+
+function resize(width, height) {
 	canvas.width = width;
 	canvas.height = height;
 
@@ -215,9 +516,16 @@ function resize() {
 	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
 	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, canvas.width, canvas.height, 0, gl.RGB, type, null);
 
+	gl.bindTexture(gl.TEXTURE_2D, textures[1]);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+	gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+	gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, canvas.width, canvas.height, 0, gl.RGB, type, null);
+
 	gl.bindTexture(gl.TEXTURE_2D, null);
 
-	iterations = 0;
+	u_iterations = 0;
 }
 
 // INTERACTION
@@ -292,27 +600,27 @@ function handleKeyDown(event) {
 	if (event.code == "Space")
 		pause = !pause;
 	if (event.code == "KeyA") {
-		++keyboard[1];
+		++u_keyboard[1];
 		u_iterations = 0;
 	}
 	if (event.code == "KeyD") {
-		--keyboard[1];
+		--u_keyboard[1];
 		u_iterations = 0;
 	}
 	if (event.code == "KeyW") {
-		++keyboard[0];
+		++u_keyboard[0];
 		u_iterations = 0;
 	}
 	if (event.code == "KeyS") {
-		--keyboard[0];
+		--u_keyboard[0];
 		u_iterations = 0;
 	}
 	if (event.code == "ShiftLeft" || event.code == "ShiftRight") {
-		--keyboard[2];
+		--u_keyboard[2];
 		u_iterations = 0;
 	}
 	if (event.code == "ControlLeft" || event.code == "ControlRight") {
-		++keyboard[2];
+		++u_keyboard[2];
 		u_iterations = 0;
 	}
 }
