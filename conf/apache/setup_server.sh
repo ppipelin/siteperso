@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo git config --global --add safe.directory /home/pi/ppipelin.github.io
+sudo git submodule update --init --recursive
 sudo chown -R www-data:www-data /home/pi/ppipelin.github.io
 sudo chmod -R 777 /home/pi/ppipelin.github.io
 sudo apt-get update -y && sudo apt-get upgrade -y
